@@ -1,6 +1,9 @@
 package com.bjj_metrics_brasil.authentication.repository.entity;
 
+import com.bjj_metrics_brasil.authentication.repository.Enum.UserStatusEnum;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -26,5 +29,7 @@ public class User {
     private UUID id;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private UserStatusEnum status;
     private LocalDateTime createdAt;
 }

@@ -6,3 +6,5 @@ spring:
       expiration: ${JWT_EXPIRATION:3600000}
     refresh-token:
       expiration: ${JWT_REFRESH_TOKEN:7200000}
+  app-client:
+    feignUrl: ${SERVER_URL:http://localhost:8080}

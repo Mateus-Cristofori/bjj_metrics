@@ -1,4 +1,4 @@
-package com.bjj_metrics_brasil.authentication.tokenService.config;
+package com.bjj_metrics_brasil.authentication.config.token.config;
 
 import lombok.Getter;
 import lombok.Setter;

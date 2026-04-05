@@ -1,9 +1,9 @@
-package com.bjj_metrics_brasil.authentication.tokenService.service.impl;
+package com.bjj_metrics_brasil.authentication.config.token.service.impl;
 
 import com.bjj_metrics_brasil.authentication.repository.entity.User;
-import com.bjj_metrics_brasil.authentication.tokenService.config.JwtProperties;
-import com.bjj_metrics_brasil.authentication.tokenService.config.JwtTokenClaims;
-import com.bjj_metrics_brasil.authentication.tokenService.service.TokenService;
+import com.bjj_metrics_brasil.authentication.config.token.config.JwtProperties;
+import com.bjj_metrics_brasil.authentication.config.token.config.JwtTokenClaims;
+import com.bjj_metrics_brasil.authentication.config.token.service.TokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;

@@ -1,0 +1,25 @@
+package com.bjj_metrics_brasil.onboarding.converter;
+
+import com.bjj_metrics_brasil.onboarding.model.request.CreateAthleteRequest;
+import com.bjj_metrics_brasil.onboarding.model.request.OnboardingUserRequest;
+import org.springframework.stereotype.Component;
+import java.util.UUID;
+
+@Component
+public class CreateAthleteConverter {
+
+    public CreateAthleteRequest convert(UUID userId, OnboardingUserRequest onboardingUserRequest) {
+        return CreateAthleteRequest
+            .builder()
+            .userId(userId)
+            .name(onboardingUserRequest.getName())
+            .lastname(onboardingUserRequest.getLastname())
+            .email(onboardingUserRequest.getEmail())
+            .belt(onboardingUserRequest.getBelt())
+            .weight(onboardingUserRequest.getWeight())
+            .academyName(onboardingUserRequest.getAcademyName())
+            .city(onboardingUserRequest.getCity())
+            .birthDate(onboardingUserRequest.getBirthDate())
+            .build();
+    }
+}

@@ -1,13 +1,13 @@
 package com.bjj_metrics_brasil.authentication.service.impl;
 
-import com.bjj_metrics_brasil.authentication.exceptions.InvalidUserCredentials;
-import com.bjj_metrics_brasil.authentication.exceptions.UserNotFoundException;
+import com.bjj_metrics_brasil.exceptions.InvalidUserCredentialsException;
+import com.bjj_metrics_brasil.exceptions.UserNotFoundException;
 import com.bjj_metrics_brasil.authentication.model.request.AuthenticationRequest;
 import com.bjj_metrics_brasil.authentication.model.response.AuthenticationResponse;
 import com.bjj_metrics_brasil.authentication.repository.UserRepository;
 import com.bjj_metrics_brasil.authentication.repository.entity.User;
 import com.bjj_metrics_brasil.authentication.service.AuthenticationService;
-import com.bjj_metrics_brasil.authentication.tokenService.service.TokenService;
+import com.bjj_metrics_brasil.authentication.config.token.service.TokenService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         } catch (RuntimeException e) {
-            throw new InvalidUserCredentials();
+            throw new InvalidUserCredentialsException();
         }
     }
 
