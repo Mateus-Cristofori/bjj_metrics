@@ -2,10 +2,10 @@ package com.bjj_metrics_brasil.onboarding.model.request;
 
 import com.bjj_metrics_brasil.onboarding.model.Enum.BeltEnum;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor

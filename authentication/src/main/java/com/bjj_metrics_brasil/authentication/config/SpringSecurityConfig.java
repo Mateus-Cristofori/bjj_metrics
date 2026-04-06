@@ -14,12 +14,21 @@ public class SpringSecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        AuthenticationConfiguration authenticationConfiguration
+    ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.build();
+        return http
+            .authorizeHttpRequests(authorize ->
+                authorize
+                    .requestMatchers("")
+                    .permitAll()
+                    .requestMatchers("")
+                    .hasAnyAuthority()
+            )
+            .build();
     }
 }

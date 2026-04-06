@@ -18,7 +18,7 @@ public class OnboardingController {
 
     private final OnboardingService onboardingService;
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void onboardingUser(
         @RequestBody @Valid OnboardingUserRequest onboardingUserRequest

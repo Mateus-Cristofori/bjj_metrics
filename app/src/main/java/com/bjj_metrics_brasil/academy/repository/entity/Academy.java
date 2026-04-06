@@ -24,9 +24,12 @@ public class Academy {
     @Id
     @GeneratedValue
     private UUID id;
+
     @NotNull
     private UUID userId;
+
     @NotNull
     private String academyName;
+
     private String city;
 }

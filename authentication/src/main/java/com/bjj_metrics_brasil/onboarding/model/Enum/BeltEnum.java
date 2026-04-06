@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-
 @Getter
 @AllArgsConstructor
 public enum BeltEnum {
@@ -13,7 +12,6 @@ public enum BeltEnum {
     PURPLE("purple"),
     BROWN("brown"),
     BLACK("black");
-
 
     @JsonValue
     private final String value;

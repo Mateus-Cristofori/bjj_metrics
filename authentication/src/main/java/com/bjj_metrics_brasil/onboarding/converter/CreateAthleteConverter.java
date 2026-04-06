@@ -2,13 +2,16 @@ package com.bjj_metrics_brasil.onboarding.converter;
 
 import com.bjj_metrics_brasil.onboarding.model.request.CreateAthleteRequest;
 import com.bjj_metrics_brasil.onboarding.model.request.OnboardingUserRequest;
-import org.springframework.stereotype.Component;
 import java.util.UUID;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CreateAthleteConverter {
 
-    public CreateAthleteRequest convert(UUID userId, OnboardingUserRequest onboardingUserRequest) {
+    public CreateAthleteRequest convert(
+        UUID userId,
+        OnboardingUserRequest onboardingUserRequest
+    ) {
         return CreateAthleteRequest
             .builder()
             .userId(userId)

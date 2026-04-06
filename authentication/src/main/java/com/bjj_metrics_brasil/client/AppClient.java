@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "app-client", url = "${app-client.feignUrl}")
 public interface AppClient {
-
     @PostMapping("/api/v1/athlete/create")
-    void createAthlete(
-        @RequestBody CreateAthleteRequest createAthleteRequest
-    );
+    void createAthlete(@RequestBody CreateAthleteRequest createAthleteRequest);
 }

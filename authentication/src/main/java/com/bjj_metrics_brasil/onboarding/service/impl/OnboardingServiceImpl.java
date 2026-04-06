@@ -9,11 +9,11 @@ import com.bjj_metrics_brasil.onboarding.converter.CreateAthleteConverter;
 import com.bjj_metrics_brasil.onboarding.model.request.OnboardingUserRequest;
 import com.bjj_metrics_brasil.onboarding.service.OnboardingService;
 import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -40,14 +40,16 @@ public class OnboardingServiceImpl implements OnboardingService {
                 .build()
         );
 
-        appClient.createAthlete(createAthleteConverter.convert(user.getId(), onboardingUserRequest));
+        appClient.createAthlete(
+            createAthleteConverter.convert(user.getId(), onboardingUserRequest)
+        );
     }
 
     private void validateNewUser(String email) {
-        if(!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             throw new BadRequestException("Invalid email format");
         }
-        if(isUserExists(email)) {
+        if (isUserExists(email)) {
             throw new BadRequestException("User already exists");
         }
     }

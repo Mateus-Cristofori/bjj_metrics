@@ -27,14 +27,19 @@ public class Athlete {
     @Id
     @GeneratedValue
     private UUID id;
+
     @NotNull
     private UUID userId;
+
     @NotNull
     private String athleteName;
+
     @NotNull
     private BeltEnum belt;
+
     @NotNull
     private Double weight;
+
     private LocalDate birthDate;
     private LocalDateTime createdAt;
 }

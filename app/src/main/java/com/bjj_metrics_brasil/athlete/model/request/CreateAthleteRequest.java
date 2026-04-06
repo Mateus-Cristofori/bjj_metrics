@@ -1,12 +1,12 @@
 package com.bjj_metrics_brasil.athlete.model.request;
 
 import com.bjj_metrics_brasil.athlete.model.Enum.BeltEnum;
+import java.time.LocalDate;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Builder
