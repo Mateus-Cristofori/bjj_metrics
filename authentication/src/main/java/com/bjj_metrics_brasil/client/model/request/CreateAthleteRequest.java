@@ -1,4 +1,4 @@
-package com.bjj_metrics_brasil.onboarding.model.request;
+package com.bjj_metrics_brasil.client.model.request;
 
 import com.bjj_metrics_brasil.onboarding.model.Enum.BeltEnum;
 import java.time.LocalDate;

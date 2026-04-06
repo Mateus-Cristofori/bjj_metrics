@@ -1,6 +1,6 @@
 package com.bjj_metrics_brasil.onboarding.converter;
 
-import com.bjj_metrics_brasil.onboarding.model.request.CreateAthleteRequest;
+import com.bjj_metrics_brasil.client.model.request.CreateAthleteRequest;
 import com.bjj_metrics_brasil.onboarding.model.request.OnboardingUserRequest;
 import java.util.UUID;
 import org.springframework.stereotype.Component;
@@ -20,8 +20,6 @@ public class CreateAthleteConverter {
             .email(onboardingUserRequest.getEmail())
             .belt(onboardingUserRequest.getBelt())
             .weight(onboardingUserRequest.getWeight())
-            .academyName(onboardingUserRequest.getAcademyName())
-            .city(onboardingUserRequest.getCity())
             .birthDate(onboardingUserRequest.getBirthDate())
             .build();
     }

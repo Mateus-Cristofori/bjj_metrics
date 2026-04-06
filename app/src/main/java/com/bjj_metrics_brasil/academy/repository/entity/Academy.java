@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,4 +33,7 @@ public class Academy {
     private String academyName;
 
     private String city;
+    private String state;
+    private String country;
+    private LocalDateTime createdAt;
 }

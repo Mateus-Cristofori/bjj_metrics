@@ -20,7 +20,5 @@ public class CreateAthleteRequest {
     private String email;
     private BeltEnum belt;
     private Double weight;
-    private String academyName;
-    private String city;
     private LocalDate birthDate;
 }

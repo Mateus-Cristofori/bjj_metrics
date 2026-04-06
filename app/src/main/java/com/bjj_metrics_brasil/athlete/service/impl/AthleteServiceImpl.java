@@ -20,6 +20,10 @@ public class AthleteServiceImpl implements AthleteService {
 
     @Override
     public void createAthlete(CreateAthleteRequest createAthleteRequest) {
+        log.info(
+            "Registering new athlete for userId: {} ",
+            createAthleteRequest.getUserId()
+        );
         athleteRepository.save(
             Athlete
                 .builder()

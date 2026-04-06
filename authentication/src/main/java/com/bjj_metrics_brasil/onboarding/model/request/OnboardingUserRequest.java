@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 @AllArgsConstructor
@@ -30,8 +31,24 @@ public class OnboardingUserRequest {
     @NotNull(message = "Your weight needs to be informed")
     private Double weight;
 
-    private String academyName;
-    private String city;
-    // ! Colocar estado.
     private LocalDate birthDate;
+
+    private Academy academy;
+
+    @Getter
+    @Builder
+    public static class Academy {
+
+        @NotNull(message = "Field academy name cannot be empty")
+        private String academyName;
+
+        @NotNull(message = "Field city cannot be empty")
+        private String city;
+
+        @NotNull(message = "Field state cannot be empty")
+        private String state;
+
+        @NotNull(message = "Field country cannot be empty")
+        private String country;
+    }
 }
