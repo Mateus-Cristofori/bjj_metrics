@@ -28,7 +28,13 @@ public class AthleteServiceImpl implements AthleteService {
             Athlete
                 .builder()
                 .userId(createAthleteRequest.getUserId())
-                .athleteName(createAthleteRequest.getName())
+                .athleteName(
+                    String.format(
+                        "%s %s",
+                        createAthleteRequest.getName(),
+                        createAthleteRequest.getLastname()
+                    )
+                )
                 .belt(createAthleteRequest.getBelt())
                 .weight(createAthleteRequest.getWeight())
                 .birthDate(createAthleteRequest.getBirthDate())
