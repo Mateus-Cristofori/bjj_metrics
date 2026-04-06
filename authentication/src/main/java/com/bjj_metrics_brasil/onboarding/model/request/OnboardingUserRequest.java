@@ -32,5 +32,6 @@ public class OnboardingUserRequest {
 
     private String academyName;
     private String city;
+    // ! Colocar estado.
     private LocalDate birthDate;
 }

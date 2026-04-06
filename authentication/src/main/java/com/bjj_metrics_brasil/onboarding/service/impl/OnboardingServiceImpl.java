@@ -2,7 +2,7 @@ package com.bjj_metrics_brasil.onboarding.service.impl;
 
 import com.bjj_metrics_brasil.authentication.repository.Enum.UserStatusEnum;
 import com.bjj_metrics_brasil.authentication.repository.UserRepository;
-import com.bjj_metrics_brasil.authentication.repository.entity.User;
+import com.bjj_metrics_brasil.authentication.repository.entity.Users;
 import com.bjj_metrics_brasil.client.AppClient;
 import com.bjj_metrics_brasil.exceptions.BadRequestException;
 import com.bjj_metrics_brasil.onboarding.converter.CreateAthleteConverter;
@@ -29,9 +29,8 @@ public class OnboardingServiceImpl implements OnboardingService {
     @Transactional
     public void onboardingUser(OnboardingUserRequest onboardingUserRequest) {
         validateNewUser(onboardingUserRequest.getEmail());
-
-        User user = userRepository.save(
-            User
+        Users user = userRepository.save(
+            Users
                 .builder()
                 .email(onboardingUserRequest.getEmail())
                 .password(passwordEncoder.encode(onboardingUserRequest.getPassword()))

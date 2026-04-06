@@ -23,6 +23,7 @@ public class AthleteServiceImpl implements AthleteService {
         athleteRepository.save(
             Athlete
                 .builder()
+                .userId(createAthleteRequest.getUserId())
                 .athleteName(createAthleteRequest.getName())
                 .belt(createAthleteRequest.getBelt())
                 .weight(createAthleteRequest.getWeight())

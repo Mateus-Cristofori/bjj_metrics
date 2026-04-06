@@ -4,7 +4,7 @@ import com.bjj_metrics_brasil.authentication.config.token.service.TokenService;
 import com.bjj_metrics_brasil.authentication.model.request.AuthenticationRequest;
 import com.bjj_metrics_brasil.authentication.model.response.AuthenticationResponse;
 import com.bjj_metrics_brasil.authentication.repository.UserRepository;
-import com.bjj_metrics_brasil.authentication.repository.entity.User;
+import com.bjj_metrics_brasil.authentication.repository.entity.Users;
 import com.bjj_metrics_brasil.authentication.service.AuthenticationService;
 import com.bjj_metrics_brasil.exceptions.InvalidUserCredentialsException;
 import com.bjj_metrics_brasil.exceptions.UserNotFoundException;
@@ -25,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
-        User user = userRepository
+        Users user = userRepository
             .findByEmail(authenticationRequest.getEmail())
             .orElseThrow(UserNotFoundException::new);
 
