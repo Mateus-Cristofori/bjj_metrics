@@ -4,10 +4,10 @@ import com.bjj_metrics_brasil.academy.model.request.CreateAcademyRequest;
 import com.bjj_metrics_brasil.academy.repository.AcademyRepository;
 import com.bjj_metrics_brasil.academy.repository.entity.Academy;
 import com.bjj_metrics_brasil.academy.service.AcademyService;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 
 @Service
 @Slf4j
