@@ -6,6 +6,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class InvalidUserCredentialsException extends ResponseStatusException {
 
     public InvalidUserCredentialsException() {
-        super(HttpStatus.BAD_REQUEST, "Invalid user credentials");
+        super(HttpStatus.UNAUTHORIZED, "Invalid user credentials!");
     }
 }
