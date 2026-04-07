@@ -1,7 +1,7 @@
 package com.bjj_metrics_brasil.onboarding.service.impl;
 
 import com.bjj_metrics_brasil.authentication.repository.Enum.UserStatusEnum;
-import com.bjj_metrics_brasil.authentication.repository.UserRepository;
+import com.bjj_metrics_brasil.authentication.repository.UsersRepository;
 import com.bjj_metrics_brasil.authentication.repository.entity.Users;
 import com.bjj_metrics_brasil.onboarding.model.request.OnboardingUserRequest;
 import com.bjj_metrics_brasil.onboarding.service.UserService;
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
     public Users createUser(OnboardingUserRequest onboardingUserRequest) {
-        return userRepository.save(
+        return usersRepository.save(
             Users
                 .builder()
                 .email(onboardingUserRequest.getEmail())
@@ -38,6 +38,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UUID userId) {
         log.info("Deleting user: {}", userId);
-        userRepository.deleteById(userId);
+        usersRepository.deleteById(userId);
     }
 }

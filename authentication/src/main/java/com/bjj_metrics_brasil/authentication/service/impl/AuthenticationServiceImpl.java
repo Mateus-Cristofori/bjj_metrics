@@ -3,7 +3,7 @@ package com.bjj_metrics_brasil.authentication.service.impl;
 import com.bjj_metrics_brasil.authentication.config.token.service.TokenService;
 import com.bjj_metrics_brasil.authentication.model.request.AuthenticationRequest;
 import com.bjj_metrics_brasil.authentication.model.response.AuthenticationResponse;
-import com.bjj_metrics_brasil.authentication.repository.UserRepository;
+import com.bjj_metrics_brasil.authentication.repository.UsersRepository;
 import com.bjj_metrics_brasil.authentication.repository.entity.Users;
 import com.bjj_metrics_brasil.authentication.service.AuthenticationService;
 import com.bjj_metrics_brasil.exceptions.InvalidUserCredentialsException;
@@ -20,12 +20,12 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
+    private final UsersRepository usersRepository;
     private final TokenService tokenService;
 
     @Override
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
-        Users user = userRepository
+        Users user = usersRepository
             .findByEmail(authenticationRequest.getEmail())
             .orElseThrow(UserNotFoundException::new);
 

@@ -1,6 +1,6 @@
 package com.bjj_metrics_brasil.onboarding.service.impl;
 
-import com.bjj_metrics_brasil.authentication.repository.UserRepository;
+import com.bjj_metrics_brasil.authentication.repository.UsersRepository;
 import com.bjj_metrics_brasil.authentication.repository.entity.Users;
 import com.bjj_metrics_brasil.client.AppClient;
 import com.bjj_metrics_brasil.exceptions.BadRequestException;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class OnboardingServiceImpl implements OnboardingService {
 
     private final AppClient appClient;
-    private final UserRepository userRepository;
+    private final UsersRepository usersRepository;
     private final CreateAthleteConverter createAthleteConverter;
     private final CreateAcademyConverter createAcademyConverter;
     private final UserService userService;
@@ -59,6 +59,6 @@ public class OnboardingServiceImpl implements OnboardingService {
     }
 
     private boolean isUserExists(String email) {
-        return userRepository.findByEmail(email).isPresent();
+        return usersRepository.findByEmail(email).isPresent();
     }
 }

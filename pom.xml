@@ -25,6 +25,7 @@
 		<module>authentication</module>
 		<module>core</module>
 		<module>app</module>
+		<module>common</module>
 	</modules>
 	<scm>
 		<connection/>
