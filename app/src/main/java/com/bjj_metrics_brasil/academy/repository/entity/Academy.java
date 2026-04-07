@@ -1,6 +1,9 @@
 package com.bjj_metrics_brasil.academy.repository.entity;
 
+import com.bjj_metrics_brasil.academy.model.Enum.CountryEnum;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -32,8 +35,14 @@ public class Academy {
     @NotNull
     private String academyName;
 
+    @NotNull
     private String city;
+
+    @NotNull
     private String state;
-    private String country;
+
+    @Enumerated(EnumType.STRING)
+    private CountryEnum country;
+
     private LocalDateTime createdAt;
 }

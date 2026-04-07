@@ -7,6 +7,7 @@ import com.bjj_metrics_brasil.academy.service.AcademyService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -26,6 +27,7 @@ public class AcademyServiceImpl implements AcademyService {
                 .city(createAcademyRequest.getCity())
                 .state(createAcademyRequest.getState())
                 .country(createAcademyRequest.getCountry())
+                .createdAt(LocalDateTime.now())
                 .build()
         );
     }

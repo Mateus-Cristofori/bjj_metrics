@@ -4,10 +4,10 @@ import com.bjj_metrics_brasil.athlete.model.request.CreateAthleteRequest;
 import com.bjj_metrics_brasil.athlete.repository.AthleteRepository;
 import com.bjj_metrics_brasil.athlete.repository.entity.Athlete;
 import com.bjj_metrics_brasil.athlete.service.AthleteService;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor

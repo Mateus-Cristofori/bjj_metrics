@@ -26,7 +26,7 @@ public class OnboardingServiceImpl implements OnboardingService {
 
     @Override
     public void onboardingUser(OnboardingUserRequest onboardingUserRequest) {
-        log.info("Registering new user: {}", onboardingUserRequest.getEmail());
+        log.info("Registering new user...");
         validateNewUser(onboardingUserRequest.getEmail());
 
         Users user = userService.createUser(onboardingUserRequest);

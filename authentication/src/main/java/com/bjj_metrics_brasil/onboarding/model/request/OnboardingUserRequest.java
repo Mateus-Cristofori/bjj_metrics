@@ -1,6 +1,7 @@
 package com.bjj_metrics_brasil.onboarding.model.request;
 
 import com.bjj_metrics_brasil.onboarding.model.Enum.BeltEnum;
+import com.bjj_metrics_brasil.onboarding.model.Enum.CountryEnum;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -49,6 +50,6 @@ public class OnboardingUserRequest {
         private String state;
 
         @NotNull(message = "Field country cannot be empty")
-        private String country;
+        private CountryEnum country;
     }
 }
