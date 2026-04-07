@@ -1,7 +1,7 @@
 package com.bjj_metrics_brasil.authentication.config;
 
 import com.bjj_metrics_brasil.authentication.repository.UserRepository;
-import com.bjj_metrics_brasil.authentication.repository.entity.User;
+import com.bjj_metrics_brasil.authentication.repository.entity.Users;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,9 +16,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail()).password(user.getPassword()).roles("USER").build();
+        Users user = userRepository
+            .findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return org.springframework.security.core.userdetails.User
+            .builder()
+            .username(user.getEmail())
+            .password(user.getPassword())
+            .roles("USER")
+            .build();
     }
 }

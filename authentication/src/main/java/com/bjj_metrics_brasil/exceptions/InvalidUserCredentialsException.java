@@ -1,11 +1,11 @@
-package com.bjj_metrics_brasil.authentication.exceptions;
+package com.bjj_metrics_brasil.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-public class InvalidUserCredentials extends ResponseStatusException {
+public class InvalidUserCredentialsException extends ResponseStatusException {
 
-    public InvalidUserCredentials() {
+    public InvalidUserCredentialsException() {
         super(HttpStatus.BAD_REQUEST, "Invalid user credentials");
     }
 }

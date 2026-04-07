@@ -14,6 +14,7 @@ public class AuthenticationRequest {
 
     @NotNull(message = "The email field cannot be empty")
     private String email;
+
     @NotNull(message = "The password field cannot be empty")
     private String password;
 }

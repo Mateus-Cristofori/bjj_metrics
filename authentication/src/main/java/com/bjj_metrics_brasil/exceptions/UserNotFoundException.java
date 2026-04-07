@@ -1,4 +1,4 @@
-package com.bjj_metrics_brasil.authentication.exceptions;
+package com.bjj_metrics_brasil.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

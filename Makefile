@@ -1,5 +1,5 @@
 prettier:
-	@mvn spotless:apply
+	@mvn prettier:write
 
 lint:
-	@mvn spotless:check
+	@mvn prettier:check

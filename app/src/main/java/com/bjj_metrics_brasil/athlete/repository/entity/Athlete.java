@@ -2,6 +2,8 @@ package com.bjj_metrics_brasil.athlete.repository.entity;
 
 import com.bjj_metrics_brasil.athlete.model.Enum.BeltEnum;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -27,14 +29,20 @@ public class Athlete {
     @Id
     @GeneratedValue
     private UUID id;
+
     @NotNull
     private UUID userId;
+
     @NotNull
     private String athleteName;
+
     @NotNull
+    @Enumerated(EnumType.STRING)
     private BeltEnum belt;
+
     @NotNull
     private Double weight;
+
     private LocalDate birthDate;
     private LocalDateTime createdAt;
 }

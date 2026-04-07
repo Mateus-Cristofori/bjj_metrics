@@ -4,5 +4,8 @@ spring:
     jwt:
       secret: ${JWT_SECRET}
       expiration: ${JWT_EXPIRATION:3600000}
-    refresh-token:
-      expiration: ${JWT_REFRESH_TOKEN:7200000}
+      refresh-token:
+        expiration: ${JWT_REFRESH_TOKEN:7200000}
+
+app-client:
+  feignUrl: http://localhost:8080
