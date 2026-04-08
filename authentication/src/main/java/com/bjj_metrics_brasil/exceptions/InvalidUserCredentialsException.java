@@ -1,11 +1,16 @@
 package com.bjj_metrics_brasil.exceptions;
 
+import com.bjj_metrics_brasil.annotation.exception.BaseException;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
-public class InvalidUserCredentialsException extends ResponseStatusException {
+public class InvalidUserCredentialsException extends BaseException {
+
+    public InvalidUserCredentialsException(Map<String, String> fields) {
+        super("Invalid user credentials!", HttpStatus.UNAUTHORIZED, fields);
+    }
 
     public InvalidUserCredentialsException() {
-        super(HttpStatus.UNAUTHORIZED, "Invalid user credentials!");
+        super("Invalid user credentials!", HttpStatus.UNAUTHORIZED);
     }
 }

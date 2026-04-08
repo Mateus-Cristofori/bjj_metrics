@@ -1,11 +1,16 @@
 package com.bjj_metrics_brasil.exceptions;
 
+import com.bjj_metrics_brasil.annotation.exception.BaseException;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
-public class BadRequestException extends ResponseStatusException {
+public class BadRequestException extends BaseException {
+
+    public BadRequestException(String message, Map<String, String> fields) {
+        super(message, HttpStatus.BAD_REQUEST, fields);
+    }
 
     public BadRequestException(String message) {
-        super(HttpStatus.BAD_REQUEST, message);
+        super(message, HttpStatus.BAD_REQUEST);
     }
 }

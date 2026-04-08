@@ -1,11 +1,11 @@
 package exception;
 
+import com.bjj_metrics_brasil.annotation.exception.BaseException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
-public class UnauthorizedUserException extends ResponseStatusException {
+public class UnauthorizedUserException extends BaseException {
 
     public UnauthorizedUserException() {
-        super(HttpStatus.UNAUTHORIZED, "User unauthorized.");
+        super("User unauthorized.", HttpStatus.UNAUTHORIZED);
     }
 }

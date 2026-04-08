@@ -1,6 +1,6 @@
 package com.bjj_metrics_brasil.annotation.resolver;
 
-import com.bjj_metrics_brasil.annotation.CurrentUserId;
+import com.bjj_metrics_brasil.annotation.AthleteUserId;
 import java.util.UUID;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
@@ -17,7 +17,7 @@ public class CurrentUserIdResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(CurrentUserId.class);
+        return parameter.hasParameterAnnotation(AthleteUserId.class);
     }
 
     @Override

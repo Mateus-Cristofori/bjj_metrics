@@ -43,7 +43,8 @@ public class SpringSecurityConfig {
                         "/api/v1/onboarding",
                         "/api/v1/auth/login",
                         "/api/v1/athlete/create",
-                        "/api/v1/academy/create"
+                        "/api/v1/academy/create",
+                        "/api/v1/training/create"
                     )
                     .permitAll()
             )
