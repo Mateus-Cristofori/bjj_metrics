@@ -1,16 +1,15 @@
 package exception.handler;
 
-import com.bjj_metrics_brasil.exceptions.BadRequestException;
-import com.bjj_metrics_brasil.exceptions.InvalidPasswordException;
-import com.bjj_metrics_brasil.exceptions.InvalidUserCredentialsException;
-import com.bjj_metrics_brasil.exceptions.UserNotFoundException;
-import exception.UnauthorizedException;
-import exception.UnauthorizedUserException;
+import com.bjj_metrics_brasil.annotation.exception.BaseException;
 import exception.model.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.Instant;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,63 +19,48 @@ public class GlobalExceptionHandler {
     private ResponseEntity<ErrorResponse> defaultHandlerException(
         Exception exception,
         HttpStatus httpStatus,
-        HttpServletRequest request
+        HttpServletRequest request,
+        Map<String, String> fields
     ) {
         ErrorResponse error = new ErrorResponse(
             exception.getMessage(),
-            HttpStatus.UNAUTHORIZED.value(),
+            httpStatus.value(),
             request.getRequestURI(),
+            fields,
             Instant.now()
         );
         return new ResponseEntity<>(error, httpStatus);
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErrorResponse> handleBadRequestException(
-        Exception exception,
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ErrorResponse> handleBaseException(
+        BaseException exception,
         HttpServletRequest request
     ) {
-        return defaultHandlerException(exception, HttpStatus.BAD_REQUEST, request);
+        return defaultHandlerException(
+            exception,
+            exception.getStatus(),
+            request,
+            exception.getFields()
+        );
     }
 
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ErrorResponse> handleUnauthorizedException(
-        Exception exception,
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+        MethodArgumentNotValidException exception,
         HttpServletRequest request
     ) {
-        return defaultHandlerException(exception, HttpStatus.UNAUTHORIZED, request);
-    }
-
-    @ExceptionHandler(UnauthorizedUserException.class)
-    public ResponseEntity<ErrorResponse> handleUnauthorizedUserException(
-        Exception exception,
-        HttpServletRequest request
-    ) {
-        return defaultHandlerException(exception, HttpStatus.UNAUTHORIZED, request);
-    }
-
-    @ExceptionHandler(InvalidUserCredentialsException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidUserCredentialsException(
-        Exception exception,
-        HttpServletRequest request
-    ) {
-        return defaultHandlerException(exception, HttpStatus.UNAUTHORIZED, request);
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(
-        Exception exception,
-        HttpServletRequest request
-    ) {
-        return defaultHandlerException(exception, HttpStatus.NOT_FOUND, request);
-    }
-
-    @ExceptionHandler(InvalidPasswordException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidPasswordException(
-        Exception exception,
-        HttpServletRequest request
-    ) {
-        return defaultHandlerException(exception, HttpStatus.UNAUTHORIZED, request);
+        Map<String, String> fields = new HashMap<>();
+        exception
+            .getBindingResult()
+            .getFieldErrors()
+            .forEach(error -> fields.put(error.getField(), error.getDefaultMessage()));
+        return defaultHandlerException(
+            new RuntimeException("Validation failed."),
+            HttpStatus.BAD_REQUEST,
+            request,
+            fields
+        );
     }
 
     @ExceptionHandler(Exception.class)
@@ -87,7 +71,8 @@ public class GlobalExceptionHandler {
         return defaultHandlerException(
             exception,
             HttpStatus.INTERNAL_SERVER_ERROR,
-            request
+            request,
+            Collections.emptyMap()
         );
     }
 }

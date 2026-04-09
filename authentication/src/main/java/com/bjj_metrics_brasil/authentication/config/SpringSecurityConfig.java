@@ -37,20 +37,39 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
             .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(authorize ->
+            .authorizeHttpRequests(authorize -> {
+                //                configureAppRoutes(authorize);
+                //                configureAuthenticationRoutes(authorize);
                 authorize
                     .requestMatchers(
                         "/api/v1/onboarding",
                         "/api/v1/auth/login",
                         "/api/v1/athlete/create",
-                        "/api/v1/academy/create"
+                        "/api/v1/academy/create",
+                        "/api/v1/training/create",
+                        "/api/v1/roll/create",
+                        "/api/v1/roll/list-all",
+                        "/api/v1/training/list-all",
+                        "/api/v1/roll/list-all/*"
                     )
-                    .permitAll()
-            )
+                    .permitAll();
+            })
             .addFilterBefore(
                 jwtTokenFilterService,
                 UsernamePasswordAuthenticationFilter.class
             )
             .build();
     }
+    //
+    //    private void configureAppRoutes(
+    //        AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry app
+    //    ) {
+    //        //        app.requestMatchers().hasAnyAuthority();
+    //    }
+    //
+    //    private void configureAuthenticationRoutes(
+    //        AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry auth
+    //    ) {
+    //        //        auth.requestMatchers().hasAnyAuthority();
+    //    }
 }

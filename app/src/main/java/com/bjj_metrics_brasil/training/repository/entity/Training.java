@@ -1,7 +1,10 @@
 package com.bjj_metrics_brasil.training.repository.entity;
 
+import com.bjj_metrics_brasil.training.model.Enum.TrainingIntensityEnum;
 import com.bjj_metrics_brasil.training.model.Enum.TrainingTypeEnum;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -31,11 +34,26 @@ public class Training {
     private UUID athleteId;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private TrainingTypeEnum trainingType;
 
     @NotNull
     private Integer durationMinutes;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TrainingIntensityEnum intensity;
+
+    @NotNull
+    private Boolean gi;
+
+    @NotNull
+    private Integer rollsAmount;
+
+    private UUID academyId;
+
     private String notes;
-    private LocalDate date;
+
+    @NotNull
+    private LocalDate trainingDate;
 }
