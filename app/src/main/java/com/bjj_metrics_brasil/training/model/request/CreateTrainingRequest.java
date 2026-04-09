@@ -2,6 +2,7 @@ package com.bjj_metrics_brasil.training.model.request;
 
 import com.bjj_metrics_brasil.training.model.Enum.TrainingIntensityEnum;
 import com.bjj_metrics_brasil.training.model.Enum.TrainingTypeEnum;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -33,8 +34,7 @@ public class CreateTrainingRequest {
     @NotNull(message = "Gi indicator must be provided (true for gi, false for no-gi)")
     private Boolean gi;
 
-    @NotNull(message = "Number of rounds must be provided")
-    private Integer rounds;
+    private Integer rollsAmount;
 
     private String notes;
 }

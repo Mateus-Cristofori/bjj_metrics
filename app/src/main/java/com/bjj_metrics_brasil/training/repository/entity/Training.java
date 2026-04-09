@@ -48,12 +48,12 @@ public class Training {
     private Boolean gi;
 
     @NotNull
-    private Integer rounds;
+    private Integer rollsAmount;
 
     private UUID academyId;
 
     private String notes;
 
     @NotNull
-    private LocalDate date;
+    private LocalDate trainingDate;
 }
