@@ -22,6 +22,7 @@ public class AllUserTrainingsAndRollsResponse {
     @Builder
     public static class Training {
 
+        private UUID trainingId;
         private String trainingType;
         private Integer durationMinutes;
         private String intensity;

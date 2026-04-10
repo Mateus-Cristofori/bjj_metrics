@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public enum StartPositionEnum {
     CLOSED_GUARD,
     HALF_GUARD,
+    ON_KNEES,
     STANDING;
 
     @JsonCreator
