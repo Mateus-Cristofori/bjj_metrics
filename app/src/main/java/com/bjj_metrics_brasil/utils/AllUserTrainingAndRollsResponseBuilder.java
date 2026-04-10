@@ -13,6 +13,7 @@ public class AllUserTrainingAndRollsResponseBuilder {
         AllUserTrainingsAndRollsResponse.Training trainingResponse =
             AllUserTrainingsAndRollsResponse.Training
                 .builder()
+                .trainingId(training.getId())
                 .trainingType(training.getTrainingType().name())
                 .durationMinutes(training.getDurationMinutes())
                 .intensity(training.getIntensity().name())
