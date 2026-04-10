@@ -15,8 +15,8 @@ public class RollStats {
     private double rollsPerTraining;
     private long submissionsApplied;
     private long submissionsSuffered;
-    private long netSubmissions; // applied - suffered
-    private double submissionRate; // applied / rolls
+    private long netSubmissions;
+    private double submissionRate;
     private long sweeps;
     private long passes;
     private double sweepsPerRoll;
