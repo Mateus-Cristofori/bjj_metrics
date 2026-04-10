@@ -52,6 +52,7 @@ public class Fight {
 
     private double weight;
 
+    @Enumerated(EnumType.STRING)
     private BeltEnum belt;
 
     private Integer fightDurationInMinutes;

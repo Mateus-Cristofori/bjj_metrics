@@ -52,7 +52,8 @@ public class SpringSecurityConfig {
                         "/api/v1/training/list-all",
                         "/api/v1/roll/list-all/*",
                         "/api/v1/fight/list-all",
-                        "/api/v1/fight/create"
+                        "/api/v1/fight/create",
+                        "/api/v1/athlete/retrieve/by-user-id/*"
                     )
                     .permitAll();
             })

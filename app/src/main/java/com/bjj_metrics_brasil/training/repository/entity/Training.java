@@ -47,9 +47,6 @@ public class Training {
     @NotNull
     private Boolean gi;
 
-    @NotNull
-    private Integer rollsAmount;
-
     private UUID academyId;
 
     private String notes;

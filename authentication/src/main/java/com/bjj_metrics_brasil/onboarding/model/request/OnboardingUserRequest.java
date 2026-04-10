@@ -8,10 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class OnboardingUserRequest {
 
     @NotNull(message = "The name field cannot be empty")
@@ -38,6 +40,8 @@ public class OnboardingUserRequest {
 
     @Getter
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Academy {
 
         @NotNull(message = "Field academy name cannot be empty")

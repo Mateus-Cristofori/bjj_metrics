@@ -6,6 +6,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,9 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
 @Component
 public class JwtTokenFilterService extends OncePerRequestFilter {
@@ -42,9 +42,9 @@ public class JwtTokenFilterService extends OncePerRequestFilter {
 
         String token = header.substring(7);
         try {
-            UUID userId = tokenService.getUserIdFromToken(token);
+            UUID athleteId = tokenService.getAthleteIdFromToken(token);
             UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(userId, null, List.of());
+                new UsernamePasswordAuthenticationToken(athleteId, null, List.of());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 

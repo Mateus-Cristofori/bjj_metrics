@@ -18,7 +18,6 @@ public class AllUserTrainingsResponse {
     private Integer durationMinutes;
     private String intensity;
     private Boolean gi;
-    private Integer rollsAmount;
     private UUID academyId;
     private String notes;
     private LocalDate trainingDate;

@@ -6,8 +6,10 @@ import com.bjj_metrics_brasil.authentication.model.response.AuthenticationRespon
 import com.bjj_metrics_brasil.authentication.repository.UsersRepository;
 import com.bjj_metrics_brasil.authentication.repository.entity.Users;
 import com.bjj_metrics_brasil.authentication.service.AuthenticationService;
+import com.bjj_metrics_brasil.client.AppClient;
 import com.bjj_metrics_brasil.exceptions.InvalidUserCredentialsException;
 import com.bjj_metrics_brasil.exceptions.UserNotFoundException;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UsersRepository usersRepository;
     private final TokenService tokenService;
+    private final AppClient appClient;
 
     @Override
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
@@ -31,8 +34,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         authenticateUser(buildUsernamePasswordAuthentication(authenticationRequest));
 
-        String token = tokenService.generateToken(user);
-        String refreshToken = tokenService.generateRefreshToken(user);
+        UUID athleteId = appClient.retrieveAthleteByUserId(user.getId()).getId();
+
+        String token = tokenService.generateToken(user, athleteId);
+        String refreshToken = tokenService.generateRefreshToken(user, athleteId);
 
         return AuthenticationResponse
             .builder()
