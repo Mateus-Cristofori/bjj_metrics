@@ -1,4 +1,4 @@
-package com.bjj_metrics_brasil.onboarding.model.Enum;
+package com.bjj_metrics_brasil.client.model.Enum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

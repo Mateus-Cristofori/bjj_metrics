@@ -4,4 +4,5 @@ public enum JwtTokenClaims {
     USER_ID,
     ROLES,
     EMAIL,
+    ATHLETE_ID,
 }

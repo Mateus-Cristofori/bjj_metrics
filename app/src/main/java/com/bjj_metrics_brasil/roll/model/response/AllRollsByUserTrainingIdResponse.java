@@ -22,7 +22,6 @@ public class AllRollsByUserTrainingIdResponse {
     private Integer durationMinutes;
     private TrainingIntensityEnum intensity;
     private Boolean gi;
-    private Integer rollsAmount;
     private UUID academyId;
     private String notes;
     private LocalDate trainingDate;

@@ -32,7 +32,7 @@ public class RollServiceImpl implements RollService {
     @Override
     public void createRoll(CreateRollRequest createRollRequest) {
         Training training = retrieveTrainingById(createRollRequest.getTrainingId());
-        log.info("Creating roll for user_id: {}", training.getAthleteId());
+        log.info("Creating roll for athlete_id: {}", training.getAthleteId());
         rollRepository.save(
             Roll
                 .builder()

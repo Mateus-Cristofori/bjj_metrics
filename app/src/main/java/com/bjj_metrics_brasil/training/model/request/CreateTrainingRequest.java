@@ -34,7 +34,5 @@ public class CreateTrainingRequest {
     @NotNull(message = "Gi indicator must be provided (true for gi, false for no-gi)")
     private Boolean gi;
 
-    private Integer rollsAmount;
-
     private String notes;
 }

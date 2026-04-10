@@ -1,7 +1,11 @@
 package com.bjj_metrics_brasil.fight.repository.entity;
 
-import com.bjj_metrics_brasil.fight.model.Enum.ResultFightEnum;
+import com.bjj_metrics_brasil.athlete.model.Enum.BeltEnum;
+import com.bjj_metrics_brasil.fight.model.Enum.FightOutcomeMethodEnum;
+import com.bjj_metrics_brasil.fight.model.Enum.FightResultEnum;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -32,13 +36,28 @@ public class Fight {
 
     private String opponentName;
 
+    @Enumerated(EnumType.STRING)
+    private BeltEnum opponentBelt;
+
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private FightResultEnum result;
+
+    @Enumerated(EnumType.STRING)
+    private FightOutcomeMethodEnum outcomeMethod;
+
+    private Integer points;
+
     private String eventName;
 
-    @NotNull
-    private ResultFightEnum result;
+    private double weight;
 
-    private Integer pointsScored;
-    private Integer pointsConceded;
+    @Enumerated(EnumType.STRING)
+    private BeltEnum belt;
+
+    private Integer fightDurationInMinutes;
+
     private LocalDate date;
+
+    private String notes;
 }

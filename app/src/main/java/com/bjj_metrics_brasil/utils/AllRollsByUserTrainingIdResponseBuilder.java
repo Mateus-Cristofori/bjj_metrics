@@ -16,7 +16,6 @@ public class AllRollsByUserTrainingIdResponseBuilder {
             .durationMinutes(training.getDurationMinutes())
             .intensity(training.getIntensity())
             .gi(training.getGi())
-            .rollsAmount(training.getRollsAmount())
             .academyId(training.getAcademyId())
             .notes(training.getNotes())
             .trainingDate(training.getTrainingDate())

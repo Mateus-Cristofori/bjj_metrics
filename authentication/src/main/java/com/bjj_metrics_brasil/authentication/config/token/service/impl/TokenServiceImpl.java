@@ -23,29 +23,33 @@ public class TokenServiceImpl implements TokenService {
     private final JwtProperties jwtProperties;
 
     @Override
-    public String generateToken(Users user) {
+    public String generateToken(Users user, UUID athleteId) {
         Map<String, Object> claims = Map.of(
             JwtTokenClaims.USER_ID.name(),
             user.getId(),
             JwtTokenClaims.EMAIL.name(),
-            user.getEmail()
+            user.getEmail(),
+            JwtTokenClaims.ATHLETE_ID.name(),
+            athleteId
         );
         return generateJwt(claims, jwtProperties.getExpiration());
     }
 
     @Override
-    public String generateRefreshToken(Users user) {
+    public String generateRefreshToken(Users user, UUID athleteId) {
         Map<String, Object> claims = Map.of(
             JwtTokenClaims.USER_ID.name(),
             user.getId(),
             JwtTokenClaims.EMAIL.name(),
-            user.getEmail()
+            user.getEmail(),
+            JwtTokenClaims.ATHLETE_ID.name(),
+            athleteId
         );
         return generateJwt(claims, jwtProperties.getRefreshToken().getExpiration());
     }
 
     @Override
-    public UUID getUserIdFromToken(String token) {
+    public UUID getAthleteIdFromToken(String token) {
         Claims claims = Jwts
             .parser()
             .setSigningKey(
@@ -55,7 +59,7 @@ public class TokenServiceImpl implements TokenService {
             .parseClaimsJws(token)
             .getBody();
 
-        return UUID.fromString(claims.get("USER_ID", String.class));
+        return UUID.fromString(claims.get("ATHLETE_ID", String.class));
     }
 
     private String generateJwt(Map<String, Object> claims, Long expiration) {
