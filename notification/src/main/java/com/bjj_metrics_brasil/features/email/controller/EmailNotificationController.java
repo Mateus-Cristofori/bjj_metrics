@@ -16,7 +16,9 @@ public class EmailNotificationController {
     private final EmailNotificationService emailNotificationService;
 
     @PostMapping("/send")
-    public void sendEmail(@RequestBody SendNotificationEmailRequest sendNotificationEmailRequest) {
-
+    public void sendEmail(
+        @RequestBody SendNotificationEmailRequest sendNotificationEmailRequest
+    ) {
+        emailNotificationService.sendEmail(sendNotificationEmailRequest);
     }
 }

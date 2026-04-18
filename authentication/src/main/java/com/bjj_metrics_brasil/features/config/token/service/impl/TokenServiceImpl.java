@@ -1,9 +1,9 @@
 package com.bjj_metrics_brasil.features.config.token.service.impl;
 
+import com.bjj_metrics_brasil.features.auth.repository.entity.Users;
 import com.bjj_metrics_brasil.features.config.token.config.JwtProperties;
 import com.bjj_metrics_brasil.features.config.token.config.JwtTokenClaims;
 import com.bjj_metrics_brasil.features.config.token.service.TokenService;
-import com.bjj_metrics_brasil.features.auth.repository.entity.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

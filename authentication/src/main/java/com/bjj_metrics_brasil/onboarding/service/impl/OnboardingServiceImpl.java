@@ -1,9 +1,9 @@
 package com.bjj_metrics_brasil.onboarding.service.impl;
 
-import com.bjj_metrics_brasil.features.auth.repository.UsersRepository;
-import com.bjj_metrics_brasil.features.auth.repository.entity.Users;
 import com.bjj_metrics_brasil.client.AppClient;
 import com.bjj_metrics_brasil.exceptions.BadRequestException;
+import com.bjj_metrics_brasil.features.auth.repository.UsersRepository;
+import com.bjj_metrics_brasil.features.auth.repository.entity.Users;
 import com.bjj_metrics_brasil.onboarding.converter.CreateAcademyConverter;
 import com.bjj_metrics_brasil.onboarding.converter.CreateAthleteConverter;
 import com.bjj_metrics_brasil.onboarding.model.request.OnboardingUserRequest;

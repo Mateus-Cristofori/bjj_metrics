@@ -1,14 +1,14 @@
 package com.bjj_metrics_brasil.features.auth.service.impl;
 
-import com.bjj_metrics_brasil.features.config.token.service.TokenService;
+import com.bjj_metrics_brasil.client.AppClient;
+import com.bjj_metrics_brasil.exceptions.InvalidUserCredentialsException;
+import com.bjj_metrics_brasil.exceptions.UserNotFoundException;
 import com.bjj_metrics_brasil.features.auth.model.request.AuthenticationRequest;
 import com.bjj_metrics_brasil.features.auth.model.response.AuthenticationResponse;
 import com.bjj_metrics_brasil.features.auth.repository.UsersRepository;
 import com.bjj_metrics_brasil.features.auth.repository.entity.Users;
 import com.bjj_metrics_brasil.features.auth.service.AuthenticationService;
-import com.bjj_metrics_brasil.client.AppClient;
-import com.bjj_metrics_brasil.exceptions.InvalidUserCredentialsException;
-import com.bjj_metrics_brasil.exceptions.UserNotFoundException;
+import com.bjj_metrics_brasil.features.config.token.service.TokenService;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
