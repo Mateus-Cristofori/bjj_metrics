@@ -1,8 +1,8 @@
 package com.bjj_metrics_brasil.onboarding.service.impl;
 
-import com.bjj_metrics_brasil.authentication.repository.Enum.UserStatusEnum;
-import com.bjj_metrics_brasil.authentication.repository.UsersRepository;
-import com.bjj_metrics_brasil.authentication.repository.entity.Users;
+import com.bjj_metrics_brasil.features.auth.repository.Enum.UserStatusEnum;
+import com.bjj_metrics_brasil.features.auth.repository.UsersRepository;
+import com.bjj_metrics_brasil.features.auth.repository.entity.Users;
 import com.bjj_metrics_brasil.onboarding.model.request.OnboardingUserRequest;
 import com.bjj_metrics_brasil.onboarding.service.UserService;
 import jakarta.transaction.Transactional;

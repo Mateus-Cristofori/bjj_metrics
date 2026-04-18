@@ -9,3 +9,6 @@ spring:
 
 app-client:
   feignUrl: http://localhost:8080
+
+notification-client:
+  feignUrl: http://localhost:8080
