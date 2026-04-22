@@ -64,8 +64,6 @@ public interface RollRepository extends JpaRepository<Roll, UUID> {
     )
     Double getAverageIntensity(UUID athleteId);
 
-    List<Roll> findByAthleteId(UUID athleteId);
-
     @Query(
         """
 SELECT r.partnerBelt as belt, COUNT(r) as total

@@ -2,6 +2,7 @@ package com.bjj_metrics_brasil.statistics.controller;
 
 import com.bjj_metrics_brasil.annotation.AthleteUserId;
 import com.bjj_metrics_brasil.statistics.model.response.AthleteStatsResponse;
+import com.bjj_metrics_brasil.statistics.model.response.DashboardResponse;
 import com.bjj_metrics_brasil.statistics.service.StatisticsService;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,13 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
 
-    @GetMapping
+    @GetMapping("/list/user-stats")
     public AthleteStatsResponse listUserStatistics(@AthleteUserId UUID athleteId) {
         return statisticsService.listUserStatistics(athleteId);
+    }
+
+    @GetMapping("/dashboard")
+    public DashboardResponse dashboard(@AthleteUserId UUID athleteId) {
+        return statisticsService.dashboard(athleteId);
     }
 }

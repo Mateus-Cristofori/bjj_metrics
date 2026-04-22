@@ -43,7 +43,8 @@ public class StatisticsServiceImpl implements StatisticsService {
             .build();
     }
 
-    public DashboardResponse getDashboard(UUID athleteId) {
+    @Override
+    public DashboardResponse dashboard(UUID athleteId) {
         List<WeeklyTrainingStats> weeklyTrainings =
             trainingStatsService.getWeeklyTrainings(athleteId);
         List<TrainingSequenceStats> trainingSequence =

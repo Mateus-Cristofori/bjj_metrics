@@ -59,17 +59,19 @@ ORDER BY t.trainingDate
     );
 
     @Query(
-        """
+        value = """
 SELECT
-  FUNCTION('YEAR', t.trainingDate) as year,
-  FUNCTION('WEEK', t.trainingDate) as week,
-  COUNT(t) as total
-FROM Training t
-WHERE t.athleteId = :athleteId
-GROUP BY year, week
-ORDER BY year, week DESC
-LIMIT 6
-"""
+  EXTRACT(YEAR FROM t.training_date) AS year,
+  EXTRACT(WEEK FROM t.training_date) AS week,
+  COUNT(t.id) AS total
+FROM training t
+WHERE t.athlete_id = :athleteId
+GROUP BY 1,2
+ORDER BY 1 DESC, 2 DESC
+""",
+        nativeQuery = true
     )
     List<TrainingSequenceProjection> getLastWeeks(UUID athleteId);
+
+    List<Training> findByAthleteId(UUID athleteId);
 }

@@ -9,6 +9,7 @@ import com.bjj_metrics_brasil.statistics.projection.model.BeltStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.GameStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.SubmissionStatsProjection;
 import com.bjj_metrics_brasil.training.repository.TrainingRepository;
+import com.bjj_metrics_brasil.training.repository.entity.Training;
 import com.bjj_metrics_brasil.utils.CalculatePercentage;
 import com.bjj_metrics_brasil.utils.PercentageUtils;
 import java.math.BigDecimal;
@@ -76,22 +77,33 @@ public class RollStatsService {
     }
 
     public List<TechniqueStats> getTopTechniques(UUID athleteId) {
-        List<Roll> rolls = rollRepository.findByAthleteId(athleteId);
+        List<Training> trainings = trainingRepository.findByAthleteId(athleteId);
 
-        long submissions = rolls
-            .stream()
-            .mapToLong(roll -> getOrZero(Long.valueOf(roll.getSubmissionsApplied())))
-            .sum();
+        long submissions = 0;
+        long sweeps = 0;
+        long passes = 0;
 
-        long sweeps = rolls
-            .stream()
-            .mapToLong(roll -> getOrZero(Long.valueOf(roll.getSweeps())))
-            .sum();
+        for (Training training : trainings) {
+            List<Roll> rolls = rollRepository.findByTrainingId(training.getId());
 
-        long passes = rolls
-            .stream()
-            .mapToLong(roll -> getOrZero(Long.valueOf(roll.getPasses())))
-            .sum();
+            submissions +=
+                rolls
+                    .stream()
+                    .mapToLong(r -> getOrZero(Long.valueOf(r.getSubmissionsApplied())))
+                    .sum();
+
+            sweeps +=
+                rolls
+                    .stream()
+                    .mapToLong(r -> getOrZero(Long.valueOf(r.getSweeps())))
+                    .sum();
+
+            passes +=
+                rolls
+                    .stream()
+                    .mapToLong(r -> getOrZero(Long.valueOf(r.getPasses())))
+                    .sum();
+        }
 
         long total = submissions + sweeps + passes;
 
