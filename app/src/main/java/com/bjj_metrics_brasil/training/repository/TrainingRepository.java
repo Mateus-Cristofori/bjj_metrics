@@ -42,16 +42,17 @@ public interface TrainingRepository extends JpaRepository<Training, UUID> {
     long countByAthleteId(UUID athleteId);
 
     @Query(
-        """
+        value = """
 SELECT
-  t.trainingDate as date,
-  COUNT(t) as total
-FROM Training t
-WHERE t.athleteId = :athleteId
-  AND t.trainingDate >= :startDate
-GROUP BY t.trainingDate
-ORDER BY t.trainingDate
-"""
+  EXTRACT(DOW FROM t.training_date) as dayOfWeek,
+  COUNT(*) as total
+FROM training t
+WHERE t.athlete_id = :athleteId
+  AND t.training_date >= :startDate
+GROUP BY EXTRACT(DOW FROM t.training_date)
+ORDER BY dayOfWeek
+""",
+        nativeQuery = true
     )
     List<WeeklyTrainingProjection> getWeeklyTrainings(
         UUID athleteId,

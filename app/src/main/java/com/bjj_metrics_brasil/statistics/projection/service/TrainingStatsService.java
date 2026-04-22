@@ -13,6 +13,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import com.bjj_metrics_brasil.utils.ConvertDay;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class TrainingStatsService {
 
     private final TrainingRepository trainingRepository;
     private final CalculatePercentage calculatePercentage;
+    private final ConvertDay convertDay;
 
     public TrainingStats getTrainingStats(UUID athleteId) {
         TrainingStatsProjection stats = trainingRepository.getTrainingStats(athleteId);
@@ -62,11 +64,7 @@ public class TrainingStatsService {
             .stream()
             .map(weeklyTrainingProjection ->
                 new WeeklyTrainingStats(
-                    weeklyTrainingProjection
-                        .getDate()
-                        .getDayOfWeek()
-                        .name()
-                        .substring(0, 3),
+                    convertDay.convert(weeklyTrainingProjection.getDayOfWeek()),
                     weeklyTrainingProjection.getTotal()
                 )
             )
