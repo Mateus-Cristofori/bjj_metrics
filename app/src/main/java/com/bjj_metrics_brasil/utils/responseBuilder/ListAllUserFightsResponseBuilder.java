@@ -1,4 +1,4 @@
-package com.bjj_metrics_brasil.utils;
+package com.bjj_metrics_brasil.utils.responseBuilder;
 
 import com.bjj_metrics_brasil.fight.model.response.ListAllUserFightsResponse;
 import com.bjj_metrics_brasil.fight.repository.entity.Fight;

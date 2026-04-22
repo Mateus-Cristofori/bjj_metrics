@@ -1,13 +1,20 @@
 package com.bjj_metrics_brasil.statistics.projection.service;
 
 import com.bjj_metrics_brasil.roll.repository.RollRepository;
+import com.bjj_metrics_brasil.roll.repository.entity.Roll;
+import com.bjj_metrics_brasil.statistics.model.commons.BeltStats;
 import com.bjj_metrics_brasil.statistics.model.commons.RollStats;
+import com.bjj_metrics_brasil.statistics.model.commons.TechniqueStats;
+import com.bjj_metrics_brasil.statistics.projection.model.BeltStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.GameStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.SubmissionStatsProjection;
 import com.bjj_metrics_brasil.training.repository.TrainingRepository;
 import com.bjj_metrics_brasil.utils.CalculatePercentage;
+import com.bjj_metrics_brasil.utils.PercentageUtils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +24,7 @@ import org.springframework.stereotype.Service;
 public class RollStatsService {
 
     private final CalculatePercentage calculatePercentage;
+    private final PercentageUtils percentageUtils;
     private final RollRepository rollRepository;
     private final TrainingRepository trainingRepository;
 
@@ -65,6 +73,66 @@ public class RollStatsService {
             .passesPerRoll(round(passesPerRoll))
             .averageIntensity(round(averageIntensity))
             .build();
+    }
+
+    public List<TechniqueStats> getTopTechniques(UUID athleteId) {
+        List<Roll> rolls = rollRepository.findByAthleteId(athleteId);
+
+        long submissions = rolls
+            .stream()
+            .mapToLong(roll -> getOrZero(Long.valueOf(roll.getSubmissionsApplied())))
+            .sum();
+
+        long sweeps = rolls
+            .stream()
+            .mapToLong(roll -> getOrZero(Long.valueOf(roll.getSweeps())))
+            .sum();
+
+        long passes = rolls
+            .stream()
+            .mapToLong(roll -> getOrZero(Long.valueOf(roll.getPasses())))
+            .sum();
+
+        long total = submissions + sweeps + passes;
+
+        List<TechniqueStats> result = List.of(
+            build("Finalização", submissions, total),
+            build("Raspagem", sweeps, total),
+            build("Passagem", passes, total)
+        );
+
+        percentageUtils.normalizeTo100(result);
+        return result;
+    }
+
+    public List<BeltStats> getBeltStats(UUID athleteId) {
+        List<BeltStatsProjection> beltsProjection = rollRepository.getBeltStats(
+            athleteId
+        );
+
+        long total = beltsProjection
+            .stream()
+            .mapToLong(BeltStatsProjection::getTotal)
+            .sum();
+
+        return beltsProjection
+            .stream()
+            .map(beltProjection ->
+                new BeltStats(
+                    beltProjection.getBelt().name(),
+                    calculatePercentage.calculatePercentage(
+                        beltProjection.getTotal(),
+                        total
+                    )
+                )
+            )
+            .sorted(Comparator.comparing(BeltStats::getPercentage).reversed())
+            .toList();
+    }
+
+    private TechniqueStats build(String label, long value, long total) {
+        double percentage = calculatePercentage.calculatePercentage(value, total);
+        return new TechniqueStats(label, percentage);
     }
 
     private long getOrZero(Long value) {

@@ -1,6 +1,7 @@
 package com.bjj_metrics_brasil.roll.repository;
 
 import com.bjj_metrics_brasil.roll.repository.entity.Roll;
+import com.bjj_metrics_brasil.statistics.projection.model.BeltStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.GameStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.SubmissionStatsProjection;
 import java.util.List;
@@ -62,4 +63,17 @@ public interface RollRepository extends JpaRepository<Roll, UUID> {
 """
     )
     Double getAverageIntensity(UUID athleteId);
+
+    List<Roll> findByAthleteId(UUID athleteId);
+
+    @Query(
+        """
+SELECT r.partnerBelt as belt, COUNT(r) as total
+FROM Roll r
+JOIN Training t ON t.id = r.trainingId
+WHERE t.athleteId = :athleteId
+GROUP BY r.partnerBelt
+"""
+    )
+    List<BeltStatsProjection> getBeltStats(UUID athleteId);
 }

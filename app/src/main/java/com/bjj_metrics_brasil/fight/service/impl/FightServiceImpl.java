@@ -5,7 +5,7 @@ import com.bjj_metrics_brasil.fight.model.response.ListAllUserFightsResponse;
 import com.bjj_metrics_brasil.fight.repository.FightRepository;
 import com.bjj_metrics_brasil.fight.repository.entity.Fight;
 import com.bjj_metrics_brasil.fight.service.FightService;
-import com.bjj_metrics_brasil.utils.ListAllUserFightsResponseBuilder;
+import com.bjj_metrics_brasil.utils.responseBuilder.ListAllUserFightsResponseBuilder;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;

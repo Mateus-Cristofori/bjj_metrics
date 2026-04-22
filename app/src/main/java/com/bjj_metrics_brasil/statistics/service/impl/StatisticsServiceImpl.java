@@ -1,13 +1,19 @@
 package com.bjj_metrics_brasil.statistics.service.impl;
 
+import com.bjj_metrics_brasil.statistics.model.commons.BeltStats;
 import com.bjj_metrics_brasil.statistics.model.commons.FightStats;
 import com.bjj_metrics_brasil.statistics.model.commons.RollStats;
+import com.bjj_metrics_brasil.statistics.model.commons.TechniqueStats;
+import com.bjj_metrics_brasil.statistics.model.commons.TrainingSequenceStats;
 import com.bjj_metrics_brasil.statistics.model.commons.TrainingStats;
+import com.bjj_metrics_brasil.statistics.model.commons.WeeklyTrainingStats;
 import com.bjj_metrics_brasil.statistics.model.response.AthleteStatsResponse;
+import com.bjj_metrics_brasil.statistics.model.response.DashboardResponse;
 import com.bjj_metrics_brasil.statistics.projection.service.FightStatsService;
 import com.bjj_metrics_brasil.statistics.projection.service.RollStatsService;
 import com.bjj_metrics_brasil.statistics.projection.service.TrainingStatsService;
 import com.bjj_metrics_brasil.statistics.service.StatisticsService;
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +40,23 @@ public class StatisticsServiceImpl implements StatisticsService {
             .training(trainingStats)
             .roll(rollStats)
             .fight(fightStats)
+            .build();
+    }
+
+    public DashboardResponse getDashboard(UUID athleteId) {
+        List<WeeklyTrainingStats> weeklyTrainings =
+            trainingStatsService.getWeeklyTrainings(athleteId);
+        List<TrainingSequenceStats> trainingSequence =
+            trainingStatsService.getTrainingSequence(athleteId);
+        List<TechniqueStats> topTechniques = rollStatsService.getTopTechniques(athleteId);
+        List<BeltStats> beltStats = rollStatsService.getBeltStats(athleteId);
+
+        return DashboardResponse
+            .builder()
+            .weeklyTrainings(weeklyTrainings)
+            .trainingSequence(trainingSequence)
+            .topTechniques(topTechniques)
+            .beltStats(beltStats)
             .build();
     }
 }

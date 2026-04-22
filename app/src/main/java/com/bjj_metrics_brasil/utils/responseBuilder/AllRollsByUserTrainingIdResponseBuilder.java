@@ -1,4 +1,4 @@
-package com.bjj_metrics_brasil.utils;
+package com.bjj_metrics_brasil.utils.responseBuilder;
 
 import com.bjj_metrics_brasil.roll.model.response.AllRollsByUserTrainingIdResponse;
 import com.bjj_metrics_brasil.roll.repository.entity.Roll;
