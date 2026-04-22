@@ -1,13 +1,19 @@
 package com.bjj_metrics_brasil.statistics.projection.service;
 
+import com.bjj_metrics_brasil.statistics.model.commons.TrainingSequenceStats;
 import com.bjj_metrics_brasil.statistics.model.commons.TrainingStats;
+import com.bjj_metrics_brasil.statistics.model.commons.WeeklyTrainingStats;
 import com.bjj_metrics_brasil.statistics.projection.model.GiStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.TrainingStatsProjection;
+import com.bjj_metrics_brasil.statistics.projection.model.WeeklyTrainingProjection;
 import com.bjj_metrics_brasil.training.repository.TrainingRepository;
 import com.bjj_metrics_brasil.utils.CalculatePercentage;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+import com.bjj_metrics_brasil.utils.ConvertDay;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +23,7 @@ public class TrainingStatsService {
 
     private final TrainingRepository trainingRepository;
     private final CalculatePercentage calculatePercentage;
+    private final ConvertDay convertDay;
 
     public TrainingStats getTrainingStats(UUID athleteId) {
         TrainingStatsProjection stats = trainingRepository.getTrainingStats(athleteId);
@@ -45,6 +52,36 @@ public class TrainingStatsService {
             .giPercentage(giPercentage)
             .noGiPercentage(noGiPercentage)
             .build();
+    }
+
+    public List<WeeklyTrainingStats> getWeeklyTrainings(UUID athleteId) {
+        LocalDate startDate = LocalDate.now().minusDays(6);
+
+        List<WeeklyTrainingProjection> weeklyTrainings =
+            trainingRepository.getWeeklyTrainings(athleteId, startDate);
+
+        return weeklyTrainings
+            .stream()
+            .map(weeklyTrainingProjection ->
+                new WeeklyTrainingStats(
+                    convertDay.convert(weeklyTrainingProjection.getDayOfWeek()),
+                    weeklyTrainingProjection.getTotal()
+                )
+            )
+            .toList();
+    }
+
+    public List<TrainingSequenceStats> getTrainingSequence(UUID athleteId) {
+        return trainingRepository
+            .getLastWeeks(athleteId)
+            .stream()
+            .map(trainingProjection ->
+                new TrainingSequenceStats(
+                    trainingProjection.getWeek(),
+                    trainingProjection.getTotal()
+                )
+            )
+            .toList();
     }
 
     private long getOrZero(Long value) {
