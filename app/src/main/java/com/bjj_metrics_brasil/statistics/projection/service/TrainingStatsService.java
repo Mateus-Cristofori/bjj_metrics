@@ -8,12 +8,12 @@ import com.bjj_metrics_brasil.statistics.projection.model.TrainingStatsProjectio
 import com.bjj_metrics_brasil.statistics.projection.model.WeeklyTrainingProjection;
 import com.bjj_metrics_brasil.training.repository.TrainingRepository;
 import com.bjj_metrics_brasil.utils.CalculatePercentage;
+import com.bjj_metrics_brasil.utils.ConvertDay;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-import com.bjj_metrics_brasil.utils.ConvertDay;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
