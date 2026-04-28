@@ -26,7 +26,8 @@
 		<module>core</module>
 		<module>app</module>
 		<module>common</module>
-	</modules>
+        <module>notification</module>
+    </modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
