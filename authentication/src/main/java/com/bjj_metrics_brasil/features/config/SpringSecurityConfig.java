@@ -67,7 +67,9 @@ public class SpringSecurityConfig {
                         "/api/v1/fight/create",
                         "/api/v1/athlete/retrieve/by-user-id/*",
                         "/api/v1/statistics/list/user-stats",
-                        "/api/v1/statistics/dashboard"
+                        "/api/v1/statistics/dashboard",
+                        "/api/v1/statistics",
+                        "/api/v1/notification/email/send"
                     )
                     .permitAll();
             })
