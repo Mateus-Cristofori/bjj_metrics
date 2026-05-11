@@ -1,6 +1,6 @@
 package com.bjj_metrics_brasil.statistics.controller;
 
-import com.bjj_metrics_brasil.annotation.AthleteUserId;
+import com.bjj_metrics_brasil.annotation.AthleteId;
 import com.bjj_metrics_brasil.statistics.model.response.AthleteStatsResponse;
 import com.bjj_metrics_brasil.statistics.model.response.DashboardResponse;
 import com.bjj_metrics_brasil.statistics.service.StatisticsService;
@@ -18,12 +18,12 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @GetMapping("/list/user-stats")
-    public AthleteStatsResponse listUserStatistics(@AthleteUserId UUID athleteId) {
+    public AthleteStatsResponse listUserStatistics(@AthleteId UUID athleteId) {
         return statisticsService.listUserStatistics(athleteId);
     }
 
     @GetMapping("/dashboard")
-    public DashboardResponse dashboard(@AthleteUserId UUID athleteId) {
+    public DashboardResponse dashboard(@AthleteId UUID athleteId) {
         return statisticsService.dashboard(athleteId);
     }
 }

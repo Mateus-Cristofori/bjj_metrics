@@ -1,6 +1,6 @@
 package com.bjj_metrics_brasil.fight.controller;
 
-import com.bjj_metrics_brasil.annotation.AthleteUserId;
+import com.bjj_metrics_brasil.annotation.AthleteId;
 import com.bjj_metrics_brasil.fight.model.request.CreateUserFightRequest;
 import com.bjj_metrics_brasil.fight.model.response.ListAllUserFightsResponse;
 import com.bjj_metrics_brasil.fight.service.FightService;
@@ -24,16 +24,14 @@ public class FightController {
     private final FightService fightService;
 
     @GetMapping("/list-all")
-    public List<ListAllUserFightsResponse> listAllUserFight(
-        @AthleteUserId UUID athleteId
-    ) {
+    public List<ListAllUserFightsResponse> listAllUserFight(@AthleteId UUID athleteId) {
         return fightService.listAllUserFight(athleteId);
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createUserFight(
-        @AthleteUserId UUID athleteId,
+        @AthleteId UUID athleteId,
         @RequestBody @Valid CreateUserFightRequest createUserFightRequest
     ) {
         fightService.createUserFight(athleteId, createUserFightRequest);

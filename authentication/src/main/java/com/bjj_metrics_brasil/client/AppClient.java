@@ -18,6 +18,6 @@ public interface AppClient {
     @PostMapping("/api/v1/academy/create")
     void createAcademy(@RequestBody CreateAcademyRequest createAcademyRequest);
 
-    @GetMapping("/api/v1/athlete/retrieve/by-user-id/{userId}")
+    @GetMapping("/api/v1/athlete/retrieve/user-id/{userId}")
     RetrieveAthleteByUserIdResponse retrieveAthleteByUserId(@PathVariable UUID userId);
 }

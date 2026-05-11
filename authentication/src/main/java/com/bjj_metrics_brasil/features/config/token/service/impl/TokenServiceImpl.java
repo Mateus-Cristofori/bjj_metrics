@@ -62,6 +62,20 @@ public class TokenServiceImpl implements TokenService {
         return UUID.fromString(claims.get("ATHLETE_ID", String.class));
     }
 
+    @Override
+    public UUID getUserIdFromToken(String token) {
+        Claims claims = Jwts
+            .parser()
+            .setSigningKey(
+                Keys.hmacShaKeyFor(getSecret().getBytes(StandardCharsets.UTF_8))
+            )
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+
+        return UUID.fromString(claims.get("USER_ID", String.class));
+    }
+
     private String generateJwt(Map<String, Object> claims, Long expiration) {
         Date now = new Date(System.currentTimeMillis());
         Date expiresIn = new Date(now.getTime() + expiration);

@@ -7,4 +7,5 @@ public interface TokenService {
     String generateToken(Users user, UUID athleteId);
     String generateRefreshToken(Users user, UUID athleteId);
     UUID getAthleteIdFromToken(String token);
+    UUID getUserIdFromToken(String token);
 }

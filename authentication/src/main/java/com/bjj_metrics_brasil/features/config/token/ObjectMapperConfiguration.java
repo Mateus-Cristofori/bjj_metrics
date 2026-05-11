@@ -1,4 +1,4 @@
-package com.bjj_metrics_brasil.features.config;
+package com.bjj_metrics_brasil.features.config.token;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

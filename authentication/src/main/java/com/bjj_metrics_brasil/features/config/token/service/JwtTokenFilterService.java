@@ -1,6 +1,7 @@
 package com.bjj_metrics_brasil.features.config.token.service;
 
-import com.bjj_metrics_brasil.features.config.ObjectMapperConfiguration;
+import com.bjj_metrics_brasil.annotation.model.AuthenticatedUser;
+import com.bjj_metrics_brasil.features.config.token.ObjectMapperConfiguration;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -43,8 +44,19 @@ public class JwtTokenFilterService extends OncePerRequestFilter {
         String token = header.substring(7);
         try {
             UUID athleteId = tokenService.getAthleteIdFromToken(token);
+            UUID userId = tokenService.getUserIdFromToken(token);
+
+            AuthenticatedUser authenticatedUser = new AuthenticatedUser(
+                userId,
+                athleteId
+            );
+
             UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(athleteId, null, List.of());
+                new UsernamePasswordAuthenticationToken(
+                    authenticatedUser,
+                    null,
+                    List.of()
+                );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
