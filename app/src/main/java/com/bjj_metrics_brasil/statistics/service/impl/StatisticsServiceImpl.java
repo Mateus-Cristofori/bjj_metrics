@@ -1,5 +1,6 @@
 package com.bjj_metrics_brasil.statistics.service.impl;
 
+import com.bjj_metrics_brasil.statistics.model.commons.AthletePerformance;
 import com.bjj_metrics_brasil.statistics.model.commons.BeltStats;
 import com.bjj_metrics_brasil.statistics.model.commons.FightStats;
 import com.bjj_metrics_brasil.statistics.model.commons.RollStats;
@@ -51,6 +52,8 @@ public class StatisticsServiceImpl implements StatisticsService {
             trainingStatsService.getTrainingSequence(athleteId);
         List<TechniqueStats> topTechniques = rollStatsService.getTopTechniques(athleteId);
         List<BeltStats> beltStats = rollStatsService.getBeltStats(athleteId);
+        List<AthletePerformance> athletePerformance =
+            trainingStatsService.getAthletePerformance(athleteId);
 
         return DashboardResponse
             .builder()
@@ -58,6 +61,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             .trainingSequence(trainingSequence)
             .topTechniques(topTechniques)
             .beltStats(beltStats)
+            .athletePerformance(athletePerformance)
             .build();
     }
 }

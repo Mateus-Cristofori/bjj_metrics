@@ -1,8 +1,10 @@
 package com.bjj_metrics_brasil.statistics.projection.service;
 
+import com.bjj_metrics_brasil.statistics.model.commons.AthletePerformance;
 import com.bjj_metrics_brasil.statistics.model.commons.TrainingSequenceStats;
 import com.bjj_metrics_brasil.statistics.model.commons.TrainingStats;
 import com.bjj_metrics_brasil.statistics.model.commons.WeeklyTrainingStats;
+import com.bjj_metrics_brasil.statistics.projection.model.AthletePerformanceProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.GiStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.TrainingStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.WeeklyTrainingProjection;
@@ -79,6 +81,24 @@ public class TrainingStatsService {
                 new TrainingSequenceStats(
                     trainingProjection.getWeek(),
                     trainingProjection.getTotal()
+                )
+            )
+            .toList();
+    }
+
+    public List<AthletePerformance> getAthletePerformance(UUID athleteId) {
+        List<AthletePerformanceProjection> performances =
+            trainingRepository.getAthleteTrainingPerformance(athleteId);
+
+        return performances
+            .stream()
+            .map(projection ->
+                new AthletePerformance(
+                    projection.getVeryBad(),
+                    projection.getBad(),
+                    projection.getAverage(),
+                    projection.getGood(),
+                    projection.getExcellent()
                 )
             )
             .toList();

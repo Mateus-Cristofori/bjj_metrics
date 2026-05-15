@@ -1,5 +1,6 @@
 package com.bjj_metrics_brasil.training.model.request;
 
+import com.bjj_metrics_brasil.training.model.Enum.AthleteTrainingPerformanceEnum;
 import com.bjj_metrics_brasil.training.model.Enum.TrainingIntensityEnum;
 import com.bjj_metrics_brasil.training.model.Enum.TrainingTypeEnum;
 import jakarta.validation.constraints.Min;
@@ -29,9 +30,12 @@ public class CreateTrainingRequest {
     @NotNull(message = "Training intensity must be provided")
     private TrainingIntensityEnum intensity;
 
+    @NotNull(message = "Your performance in training needs to be reported.")
+    private AthleteTrainingPerformanceEnum athletePerformance;
+
     private UUID academyId;
 
-    @NotNull(message = "Gi indicator must be provided (true for gi, false for no-gi)")
+    @NotNull(message = "Gi indicator must be provided")
     private Boolean gi;
 
     private String notes;

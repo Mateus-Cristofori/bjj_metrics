@@ -34,6 +34,7 @@ public class TrainingServiceImpl implements TrainingService {
                 .intensity(createTrainingRequest.getIntensity())
                 .gi(createTrainingRequest.getGi())
                 .notes(createTrainingRequest.getNotes())
+                .athletePerformance(createTrainingRequest.getAthletePerformance())
                 .build()
         );
     }
