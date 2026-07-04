@@ -13,6 +13,10 @@ public class PercentageUtils {
 
         double total = list.stream().mapToDouble(TechniqueStats::getValue).sum();
 
+        if (total == 0) {
+            return;
+        }
+
         double diff = 100.0 - total;
 
         if (Math.abs(diff) < 0.01) return;

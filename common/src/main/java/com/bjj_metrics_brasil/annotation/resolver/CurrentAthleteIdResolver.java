@@ -1,8 +1,7 @@
 package com.bjj_metrics_brasil.annotation.resolver;
 
-import com.bjj_metrics_brasil.annotation.UserId;
+import com.bjj_metrics_brasil.annotation.AthleteId;
 import com.bjj_metrics_brasil.annotation.model.AuthenticatedUser;
-import jakarta.annotation.Nonnull;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
@@ -14,20 +13,20 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-public class CurrentUserIdResolver implements HandlerMethodArgumentResolver {
+public class CurrentAthleteIdResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(UserId.class);
+        return parameter.hasParameterAnnotation(AthleteId.class);
     }
 
     @Override
     public Object resolveArgument(
-        @Nonnull MethodParameter parameter,
+        @NonNull MethodParameter parameter,
         ModelAndViewContainer mavContainer,
         @NonNull NativeWebRequest webRequest,
         WebDataBinderFactory binderFactory
-    ) throws Exception {
+    ) {
         Authentication authentication = SecurityContextHolder
             .getContext()
             .getAuthentication();
@@ -36,7 +35,7 @@ public class CurrentUserIdResolver implements HandlerMethodArgumentResolver {
             authentication != null &&
             authentication.getPrincipal() instanceof AuthenticatedUser user
         ) {
-            return user.getUserId();
+            return user.getAthleteId();
         }
         return null;
     }

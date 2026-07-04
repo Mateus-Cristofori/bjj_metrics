@@ -83,10 +83,9 @@ public class RollServiceImpl implements RollService {
         UUID trainingId,
         UUID athleteId
     ) {
-        Training training = trainingRepository.findByIdAndAthleteId(
-            trainingId,
-            athleteId
-        );
+        Training training = trainingRepository
+            .findByIdAndAthleteId(trainingId, athleteId)
+            .orElseThrow(TrainingNotFoundException::new);
         List<Roll> rolls = rollRepository.findByTrainingId(training.getId());
 
         return allRollsByUserTrainingIdResponseBuilder.builder(training, rolls);

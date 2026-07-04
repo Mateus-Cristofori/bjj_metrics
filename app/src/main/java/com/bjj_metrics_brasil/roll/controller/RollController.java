@@ -1,6 +1,6 @@
 package com.bjj_metrics_brasil.roll.controller;
 
-import com.bjj_metrics_brasil.annotation.AthleteUserId;
+import com.bjj_metrics_brasil.annotation.AthleteId;
 import com.bjj_metrics_brasil.roll.model.request.CreateRollRequest;
 import com.bjj_metrics_brasil.roll.model.response.AllRollsByUserTrainingIdResponse;
 import com.bjj_metrics_brasil.roll.model.response.AllUserTrainingsAndRollsResponse;
@@ -27,7 +27,7 @@ public class RollController {
 
     @GetMapping("/list-all")
     public List<AllUserTrainingsAndRollsResponse> listAllUserRolls(
-        @AthleteUserId UUID athleteId
+        @AthleteId UUID athleteId
     ) {
         return rollService.listAllUserRolls(athleteId);
     }
@@ -35,7 +35,7 @@ public class RollController {
     @GetMapping("/list-all/{trainingId}")
     public AllRollsByUserTrainingIdResponse listAllUserRollsByTrainingId(
         @PathVariable UUID trainingId,
-        @AthleteUserId UUID athleteId
+        @AthleteId UUID athleteId
     ) {
         return rollService.listAllUserRollsByTrainingId(trainingId, athleteId);
     }

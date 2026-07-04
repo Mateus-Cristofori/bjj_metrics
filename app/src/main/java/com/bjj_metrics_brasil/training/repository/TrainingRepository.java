@@ -1,5 +1,6 @@
 package com.bjj_metrics_brasil.training.repository;
 
+import com.bjj_metrics_brasil.statistics.projection.model.AthletePerformanceProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.GiStatsProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.TrainingSequenceProjection;
 import com.bjj_metrics_brasil.statistics.projection.model.TrainingStatsProjection;
@@ -7,6 +8,7 @@ import com.bjj_metrics_brasil.statistics.projection.model.WeeklyTrainingProjecti
 import com.bjj_metrics_brasil.training.repository.entity.Training;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +17,7 @@ public interface TrainingRepository extends JpaRepository<Training, UUID> {
     @Query(value = "SELECT t FROM Training t WHERE t.athleteId = :athleteId")
     List<Training> listAllTrainingByAthleteId(UUID athleteId);
 
-    Training findByIdAndAthleteId(UUID id, UUID athleteId);
+    Optional<Training> findByIdAndAthleteId(UUID id, UUID athleteId);
 
     @Query(
         """
@@ -75,4 +77,18 @@ ORDER BY 1 DESC, 2 DESC
     List<TrainingSequenceProjection> getLastWeeks(UUID athleteId);
 
     List<Training> findByAthleteId(UUID athleteId);
+
+    @Query(
+        value = """
+                select
+                    COUNT(CASE WHEN athlete_performance = 'VERY_BAD' THEN 1 END) AS very_bad,
+                    COUNT(CASE WHEN athlete_performance = 'BAD' THEN 1 END) AS bad,
+                    COUNT(CASE WHEN athlete_performance = 'AVERAGE' THEN 1 END) AS average,
+                    COUNT(CASE WHEN athlete_performance = 'GOOD' THEN 1 END) AS good,
+                    COUNT(CASE WHEN athlete_performance = 'EXCELLENT' THEN 1 END) AS excellent
+                  from training where training.athlete_performance is not null and training.athlete_id = :athleteId
+                """,
+        nativeQuery = true
+    )
+    List<AthletePerformanceProjection> getAthleteTrainingPerformance(UUID athleteId);
 }

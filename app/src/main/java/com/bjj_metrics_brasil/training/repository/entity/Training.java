@@ -1,5 +1,6 @@
 package com.bjj_metrics_brasil.training.repository.entity;
 
+import com.bjj_metrics_brasil.training.model.Enum.AthleteTrainingPerformanceEnum;
 import com.bjj_metrics_brasil.training.model.Enum.TrainingIntensityEnum;
 import com.bjj_metrics_brasil.training.model.Enum.TrainingTypeEnum;
 import jakarta.persistence.Entity;
@@ -43,6 +44,10 @@ public class Training {
     @NotNull
     @Enumerated(EnumType.STRING)
     private TrainingIntensityEnum intensity;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AthleteTrainingPerformanceEnum athletePerformance;
 
     @NotNull
     private Boolean gi;

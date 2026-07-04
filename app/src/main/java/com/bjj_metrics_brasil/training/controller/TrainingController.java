@@ -1,6 +1,6 @@
 package com.bjj_metrics_brasil.training.controller;
 
-import com.bjj_metrics_brasil.annotation.AthleteUserId;
+import com.bjj_metrics_brasil.annotation.AthleteId;
 import com.bjj_metrics_brasil.training.model.request.CreateTrainingRequest;
 import com.bjj_metrics_brasil.training.model.response.AllUserTrainingsResponse;
 import com.bjj_metrics_brasil.training.service.TrainingService;
@@ -25,9 +25,7 @@ public class TrainingController {
     private final TrainingService trainingService;
 
     @GetMapping("/list-all")
-    public List<AllUserTrainingsResponse> listAllUserTraining(
-        @AthleteUserId UUID athleteId
-    ) {
+    public List<AllUserTrainingsResponse> listAllUserTraining(@AthleteId UUID athleteId) {
         return trainingService.listAllUserTrainings(athleteId);
     }
 
@@ -39,7 +37,7 @@ public class TrainingController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createTraining(
-        @AthleteUserId UUID athleteId,
+        @AthleteId UUID athleteId,
         @RequestBody @Valid CreateTrainingRequest createTrainingRequest
     ) {
         trainingService.createTraining(athleteId, createTrainingRequest);

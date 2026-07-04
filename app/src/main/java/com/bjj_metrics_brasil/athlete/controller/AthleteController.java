@@ -22,7 +22,7 @@ public class AthleteController {
 
     private final AthleteService athleteService;
 
-    @GetMapping("/retrieve/by-user-id/{userId}")
+    @GetMapping("/retrieve/user-id/{userId}")
     public RetrieveAthleteByUserIdResponse retrieveAthleteByUserId(
         @PathVariable UUID userId
     ) {
