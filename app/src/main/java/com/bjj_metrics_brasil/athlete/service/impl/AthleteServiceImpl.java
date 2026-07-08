@@ -1,7 +1,7 @@
 package com.bjj_metrics_brasil.athlete.service.impl;
 
 import com.bjj_metrics_brasil.athlete.model.request.CreateAthleteRequest;
-import com.bjj_metrics_brasil.athlete.model.response.RetrieveAthleteByUserIdResponse;
+import com.bjj_metrics_brasil.athlete.model.response.RetrieveAthleteResponse;
 import com.bjj_metrics_brasil.athlete.repository.AthleteRepository;
 import com.bjj_metrics_brasil.athlete.repository.entity.Athlete;
 import com.bjj_metrics_brasil.athlete.service.AthleteService;
@@ -45,12 +45,28 @@ public class AthleteServiceImpl implements AthleteService {
     }
 
     @Override
-    public RetrieveAthleteByUserIdResponse retrieveAthleteByUserId(UUID userId) {
+    public RetrieveAthleteResponse retrieveAthleteByUserId(UUID userId) {
         Athlete athlete = athleteRepository
             .findByUserId(userId)
             .orElseThrow(AthleteNotFoundException::new);
 
-        return RetrieveAthleteByUserIdResponse
+        return RetrieveAthleteResponse
+            .builder()
+            .id(athlete.getId())
+            .athleteName(athlete.getAthleteName())
+            .belt(athlete.getBelt())
+            .weight(athlete.getWeight())
+            .birthDate(athlete.getBirthDate())
+            .build();
+    }
+
+    @Override
+    public RetrieveAthleteResponse retrieveAthleteById(UUID athleteId) {
+        Athlete athlete = athleteRepository
+            .findById(athleteId)
+            .orElseThrow(AthleteNotFoundException::new);
+
+        return RetrieveAthleteResponse
             .builder()
             .id(athlete.getId())
             .athleteName(athlete.getAthleteName())

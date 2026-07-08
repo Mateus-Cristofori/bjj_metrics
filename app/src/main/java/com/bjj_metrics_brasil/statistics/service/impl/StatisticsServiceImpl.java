@@ -1,5 +1,6 @@
 package com.bjj_metrics_brasil.statistics.service.impl;
 
+import com.bjj_metrics_brasil.athlete.service.AthleteService;
 import com.bjj_metrics_brasil.statistics.model.commons.AthletePerformance;
 import com.bjj_metrics_brasil.statistics.model.commons.BeltStats;
 import com.bjj_metrics_brasil.statistics.model.commons.FightStats;
@@ -28,6 +29,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     private final TrainingStatsService trainingStatsService;
     private final RollStatsService rollStatsService;
     private final FightStatsService fightStatsService;
+    private final AthleteService athleteService;
 
     @Override
     public AthleteStatsResponse listUserStatistics(UUID athleteId) {
@@ -46,6 +48,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public DashboardResponse dashboard(UUID athleteId) {
+        String athleteName = athleteService
+            .retrieveAthleteById(athleteId)
+            .getAthleteName();
         List<WeeklyTrainingStats> weeklyTrainings =
             trainingStatsService.getWeeklyTrainings(athleteId);
         List<TrainingSequenceStats> trainingSequence =
@@ -54,6 +59,11 @@ public class StatisticsServiceImpl implements StatisticsService {
         List<BeltStats> beltStats = rollStatsService.getBeltStats(athleteId);
         List<AthletePerformance> athletePerformance =
             trainingStatsService.getAthletePerformance(athleteId);
+        Integer trainingStreak = trainingStatsService.getTrainingStreak(athleteId);
+        Long totalTrainings = trainingStatsService
+            .getTrainingStats(athleteId)
+            .getTotalTrainings();
+        Long totalRolls = rollStatsService.getRollStatics(athleteId).getTotalRolls();
 
         return DashboardResponse
             .builder()
@@ -62,6 +72,10 @@ public class StatisticsServiceImpl implements StatisticsService {
             .topTechniques(topTechniques)
             .beltStats(beltStats)
             .athletePerformance(athletePerformance)
+            .trainingStreak(trainingStreak)
+            .totalTrainings(totalTrainings)
+            .totalRolls(totalRolls)
+            .athleteName(athleteName)
             .build();
     }
 }

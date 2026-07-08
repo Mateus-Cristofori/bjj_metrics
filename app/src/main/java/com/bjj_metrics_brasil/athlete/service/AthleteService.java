@@ -1,10 +1,11 @@
 package com.bjj_metrics_brasil.athlete.service;
 
 import com.bjj_metrics_brasil.athlete.model.request.CreateAthleteRequest;
-import com.bjj_metrics_brasil.athlete.model.response.RetrieveAthleteByUserIdResponse;
+import com.bjj_metrics_brasil.athlete.model.response.RetrieveAthleteResponse;
 import java.util.UUID;
 
 public interface AthleteService {
     void createAthlete(CreateAthleteRequest createAthleteRequest);
-    RetrieveAthleteByUserIdResponse retrieveAthleteByUserId(UUID userId);
+    RetrieveAthleteResponse retrieveAthleteByUserId(UUID userId);
+    RetrieveAthleteResponse retrieveAthleteById(UUID athleteId);
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RetrieveAthleteByUserIdResponse {
+public class RetrieveAthleteResponse {
 
     private UUID id;
     private String athleteName;

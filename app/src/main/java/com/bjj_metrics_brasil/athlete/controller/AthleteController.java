@@ -1,7 +1,7 @@
 package com.bjj_metrics_brasil.athlete.controller;
 
 import com.bjj_metrics_brasil.athlete.model.request.CreateAthleteRequest;
-import com.bjj_metrics_brasil.athlete.model.response.RetrieveAthleteByUserIdResponse;
+import com.bjj_metrics_brasil.athlete.model.response.RetrieveAthleteResponse;
 import com.bjj_metrics_brasil.athlete.service.AthleteService;
 import jakarta.validation.Valid;
 import java.util.UUID;
@@ -23,10 +23,13 @@ public class AthleteController {
     private final AthleteService athleteService;
 
     @GetMapping("/retrieve/user-id/{userId}")
-    public RetrieveAthleteByUserIdResponse retrieveAthleteByUserId(
-        @PathVariable UUID userId
-    ) {
+    public RetrieveAthleteResponse retrieveAthleteByUserId(@PathVariable UUID userId) {
         return athleteService.retrieveAthleteByUserId(userId);
+    }
+
+    @GetMapping("/retrieve/{athleteId}")
+    public RetrieveAthleteResponse retrieveAthleteById(@PathVariable UUID athleteId) {
+        return athleteService.retrieveAthleteById(athleteId);
     }
 
     @PostMapping("/create")

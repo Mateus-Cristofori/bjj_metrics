@@ -45,20 +45,21 @@ public interface TrainingRepository extends JpaRepository<Training, UUID> {
 
     @Query(
         value = """
-SELECT
-  EXTRACT(DOW FROM t.training_date) as dayOfWeek,
-  COUNT(*) as total
-FROM training t
-WHERE t.athlete_id = :athleteId
-  AND t.training_date >= :startDate
-GROUP BY EXTRACT(DOW FROM t.training_date)
-ORDER BY dayOfWeek
-""",
+        SELECT
+            t.training_date AS trainingDate,
+            COUNT(*) AS total
+        FROM training t
+        WHERE t.athlete_id = :athleteId
+          AND t.training_date BETWEEN :startDate AND :endDate
+        GROUP BY t.training_date
+        ORDER BY t.training_date
+        """,
         nativeQuery = true
     )
     List<WeeklyTrainingProjection> getWeeklyTrainings(
         UUID athleteId,
-        LocalDate startDate
+        LocalDate startDate,
+        LocalDate endDate
     );
 
     @Query(
@@ -80,15 +81,38 @@ ORDER BY 1 DESC, 2 DESC
 
     @Query(
         value = """
-                select
-                    COUNT(CASE WHEN athlete_performance = 'VERY_BAD' THEN 1 END) AS very_bad,
-                    COUNT(CASE WHEN athlete_performance = 'BAD' THEN 1 END) AS bad,
-                    COUNT(CASE WHEN athlete_performance = 'AVERAGE' THEN 1 END) AS average,
-                    COUNT(CASE WHEN athlete_performance = 'GOOD' THEN 1 END) AS good,
-                    COUNT(CASE WHEN athlete_performance = 'EXCELLENT' THEN 1 END) AS excellent
-                  from training where training.athlete_performance is not null and training.athlete_id = :athleteId
-                """,
+        SELECT
+            COUNT(CASE WHEN athlete_performance = 'VERY_BAD' THEN 1 END) AS very_bad,
+            COUNT(CASE WHEN athlete_performance = 'BAD' THEN 1 END) AS bad,
+            COUNT(CASE WHEN athlete_performance = 'AVERAGE' THEN 1 END) AS average,
+            COUNT(CASE WHEN athlete_performance = 'GOOD' THEN 1 END) AS good,
+            COUNT(CASE WHEN athlete_performance = 'EXCELLENT' THEN 1 END) AS excellent
+        FROM training
+        WHERE athlete_id = :athleteId
+          AND athlete_performance IS NOT NULL
+          AND training_date BETWEEN :startDate AND :endDate
+        """,
         nativeQuery = true
     )
-    List<AthletePerformanceProjection> getAthleteTrainingPerformance(UUID athleteId);
+    List<AthletePerformanceProjection> getAthleteTrainingPerformance(
+        UUID athleteId,
+        LocalDate startDate,
+        LocalDate endDate
+    );
+
+    List<Training> findByAthleteIdAndTrainingDateBetween(
+        UUID athleteId,
+        LocalDate startDate,
+        LocalDate endDate
+    );
+
+    @Query(
+        """
+            SELECT DISTINCT t.trainingDate
+            FROM Training t
+            WHERE t.athleteId = :athleteId
+            ORDER BY t.trainingDate DESC
+            """
+    )
+    List<LocalDate> findTrainingDates(UUID athleteId);
 }
