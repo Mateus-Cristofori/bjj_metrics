@@ -12,9 +12,14 @@ import com.bjj_metrics_brasil.utils.CalculatePercentage;
 import com.bjj_metrics_brasil.utils.ConvertDay;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -56,20 +61,37 @@ public class TrainingStatsService {
     }
 
     public List<WeeklyTrainingStats> getWeeklyTrainings(UUID athleteId) {
-        LocalDate startDate = LocalDate.now().minusDays(6);
+        LocalDate today = LocalDate.now();
 
-        List<WeeklyTrainingProjection> weeklyTrainings =
-            trainingRepository.getWeeklyTrainings(athleteId, startDate);
+        LocalDate startDate = today.with(
+            TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)
+        );
+        LocalDate endDate = startDate.plusDays(6);
 
-        return weeklyTrainings
+        Map<LocalDate, Long> trainings = trainingRepository
+            .getWeeklyTrainings(athleteId, startDate, endDate)
             .stream()
-            .map(weeklyTrainingProjection ->
-                new WeeklyTrainingStats(
-                    convertDay.convert(weeklyTrainingProjection.getDayOfWeek()),
-                    weeklyTrainingProjection.getTotal()
+            .collect(
+                Collectors.toMap(
+                    WeeklyTrainingProjection::getTrainingDate,
+                    WeeklyTrainingProjection::getTotal
                 )
-            )
-            .toList();
+            );
+
+        List<WeeklyTrainingStats> result = new ArrayList<>();
+
+        for (int i = 0; i < 7; i++) {
+            LocalDate day = startDate.plusDays(i);
+
+            result.add(
+                new WeeklyTrainingStats(
+                    convertDay.convert(day.getDayOfWeek()),
+                    trainings.getOrDefault(day, 0L)
+                )
+            );
+        }
+
+        return result;
     }
 
     public List<TrainingSequenceStats> getTrainingSequence(UUID athleteId) {
@@ -86,8 +108,15 @@ public class TrainingStatsService {
     }
 
     public List<AthletePerformance> getAthletePerformance(UUID athleteId) {
+        LocalDate today = LocalDate.now();
+
+        LocalDate startDate = today.with(
+            TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)
+        );
+        LocalDate endDate = startDate.plusDays(6);
+
         return trainingRepository
-            .getAthleteTrainingPerformance(athleteId)
+            .getAthleteTrainingPerformance(athleteId, startDate, endDate)
             .stream()
             .map(projection ->
                 new AthletePerformance(
@@ -99,6 +128,35 @@ public class TrainingStatsService {
                 )
             )
             .toList();
+    }
+
+    public Integer getTrainingStreak(UUID athleteId) {
+        List<LocalDate> trainingDates = trainingRepository.findTrainingDates(athleteId);
+
+        if (trainingDates.isEmpty()) {
+            return 0;
+        }
+
+        LocalDate today = LocalDate.now();
+        LocalDate lastTraining = trainingDates.get(0);
+
+        if (lastTraining.isBefore(today.minusDays(1))) {
+            return 0;
+        }
+
+        int streak = 1;
+
+        for (int i = 0; i < trainingDates.size() - 1; i++) {
+            LocalDate current = trainingDates.get(i);
+            LocalDate previous = trainingDates.get(i + 1);
+
+            if (current.minusDays(1).equals(previous)) {
+                streak++;
+            } else {
+                break;
+            }
+        }
+        return streak;
     }
 
     private long getOrZero(Long value) {

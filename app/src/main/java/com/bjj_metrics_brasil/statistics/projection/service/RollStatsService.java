@@ -14,6 +14,9 @@ import com.bjj_metrics_brasil.utils.CalculatePercentage;
 import com.bjj_metrics_brasil.utils.PercentageUtils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -77,33 +80,37 @@ public class RollStatsService {
     }
 
     public List<TechniqueStats> getTopTechniques(UUID athleteId) {
-        List<Training> trainings = trainingRepository.findByAthleteId(athleteId);
+        LocalDate startDate = LocalDate
+            .now()
+            .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
-        long submissions = 0;
-        long sweeps = 0;
-        long passes = 0;
+        LocalDate endDate = startDate.plusDays(6);
 
-        for (Training training : trainings) {
-            List<Roll> rolls = rollRepository.findByTrainingId(training.getId());
+        List<Training> trainings =
+            trainingRepository.findByAthleteIdAndTrainingDateBetween(
+                athleteId,
+                startDate,
+                endDate
+            );
 
-            submissions +=
-                rolls
-                    .stream()
-                    .mapToLong(r -> getOrZero(Long.valueOf(r.getSubmissionsApplied())))
-                    .sum();
+        List<UUID> trainingIds = trainings.stream().map(Training::getId).toList();
 
-            sweeps +=
-                rolls
-                    .stream()
-                    .mapToLong(r -> getOrZero(Long.valueOf(r.getSweeps())))
-                    .sum();
+        List<Roll> rolls = rollRepository.findByTrainingIdIn(trainingIds);
 
-            passes +=
-                rolls
-                    .stream()
-                    .mapToLong(r -> getOrZero(Long.valueOf(r.getPasses())))
-                    .sum();
-        }
+        long submissions = rolls
+            .stream()
+            .mapToLong(r -> getOrZero(Long.valueOf(r.getSubmissionsApplied())))
+            .sum();
+
+        long sweeps = rolls
+            .stream()
+            .mapToLong(r -> getOrZero(Long.valueOf(r.getSweeps())))
+            .sum();
+
+        long passes = rolls
+            .stream()
+            .mapToLong(r -> getOrZero(Long.valueOf(r.getPasses())))
+            .sum();
 
         long total = submissions + sweeps + passes;
 
@@ -118,8 +125,16 @@ public class RollStatsService {
     }
 
     public List<BeltStats> getBeltStats(UUID athleteId) {
+        LocalDate startDate = LocalDate
+            .now()
+            .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+
+        LocalDate endDate = startDate.plusDays(6);
+
         List<BeltStatsProjection> beltsProjection = rollRepository.getBeltStats(
-            athleteId
+            athleteId,
+            startDate,
+            endDate
         );
 
         long total = beltsProjection

@@ -5,7 +5,6 @@ import com.bjj_metrics_brasil.statistics.model.commons.BeltStats;
 import com.bjj_metrics_brasil.statistics.model.commons.TechniqueStats;
 import com.bjj_metrics_brasil.statistics.model.commons.TrainingSequenceStats;
 import com.bjj_metrics_brasil.statistics.model.commons.WeeklyTrainingStats;
-import com.bjj_metrics_brasil.statistics.projection.model.AthletePerformanceProjection;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +22,8 @@ public class DashboardResponse {
     private List<TechniqueStats> topTechniques;
     private List<BeltStats> beltStats;
     private List<AthletePerformance> athletePerformance;
+    private Integer trainingStreak;
+    private Long totalTrainings;
+    private Long totalRolls;
+    private String athleteName;
 }
