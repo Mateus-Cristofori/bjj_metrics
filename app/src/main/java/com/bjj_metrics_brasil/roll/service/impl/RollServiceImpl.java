@@ -12,6 +12,7 @@ import com.bjj_metrics_brasil.training.repository.TrainingRepository;
 import com.bjj_metrics_brasil.training.repository.entity.Training;
 import com.bjj_metrics_brasil.utils.responseBuilder.AllRollsByUserTrainingIdResponseBuilder;
 import com.bjj_metrics_brasil.utils.responseBuilder.AllUserTrainingAndRollsResponseBuilder;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,37 +31,38 @@ public class RollServiceImpl implements RollService {
     private final AllRollsByUserTrainingIdResponseBuilder allRollsByUserTrainingIdResponseBuilder;
 
     @Override
+    @Transactional
     public void createRoll(CreateRollRequest createRollRequest) {
         Training training = retrieveTrainingById(createRollRequest.getTrainingId());
         log.info("Creating roll for athlete_id: {}", training.getAthleteId());
-        rollRepository.save(
-            Roll
-                .builder()
-                .trainingId(training.getId())
-                .durationMinutes(createRollRequest.getDurationMinutes())
-                .intensity(createRollRequest.getIntensity())
-                .partnerName(createRollRequest.getPartnerName())
-                .partnerBelt(createRollRequest.getPartnerBelt())
-                .startPosition(
-                    Optional
-                        .ofNullable(createRollRequest.getStartPosition())
-                        .orElse(StartPositionEnum.STANDING)
+        createRollRequest
+            .getRolls()
+            .forEach(roll ->
+                rollRepository.save(
+                    Roll
+                        .builder()
+                        .trainingId(training.getId())
+                        .durationMinutes(roll.getDurationMinutes())
+                        .intensity(roll.getIntensity())
+                        .partnerName(roll.getPartnerName())
+                        .partnerBelt(roll.getPartnerBelt())
+                        .startPosition(
+                            Optional
+                                .ofNullable(roll.getStartPosition())
+                                .orElse(StartPositionEnum.STANDING)
+                        )
+                        .submissionsApplied(
+                            Optional.ofNullable(roll.getSubmissionsApplied()).orElse(0)
+                        )
+                        .submissionsSuffered(
+                            Optional.ofNullable(roll.getSubmissionsSuffered()).orElse(0)
+                        )
+                        .sweeps(Optional.ofNullable(roll.getSweeps()).orElse(0))
+                        .passes(Optional.ofNullable(roll.getPasses()).orElse(0))
+                        .notes(roll.getNotes())
+                        .build()
                 )
-                .submissionsApplied(
-                    Optional
-                        .ofNullable(createRollRequest.getSubmissionsApplied())
-                        .orElse(0)
-                )
-                .submissionsSuffered(
-                    Optional
-                        .ofNullable(createRollRequest.getSubmissionsSuffered())
-                        .orElse(0)
-                )
-                .sweeps(Optional.ofNullable(createRollRequest.getSweeps()).orElse(0))
-                .passes(Optional.ofNullable(createRollRequest.getPasses()).orElse(0))
-                .notes(createRollRequest.getNotes())
-                .build()
-        );
+            );
     }
 
     @Override

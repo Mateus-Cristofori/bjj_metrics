@@ -70,7 +70,8 @@ public class SpringSecurityConfig {
                         "/api/v1/statistics/dashboard",
                         "/api/v1/statistics",
                         "/api/v1/notification/email/send",
-                        "/api/v1/account/retrieve/info"
+                        "/api/v1/account/retrieve/info",
+                        "/api/v1/training/create/with-rolls"
                     )
                     .permitAll();
             })
