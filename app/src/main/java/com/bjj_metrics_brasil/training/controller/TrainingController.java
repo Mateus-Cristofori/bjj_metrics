@@ -2,6 +2,7 @@ package com.bjj_metrics_brasil.training.controller;
 
 import com.bjj_metrics_brasil.annotation.AthleteId;
 import com.bjj_metrics_brasil.training.model.request.CreateTrainingRequest;
+import com.bjj_metrics_brasil.training.model.request.CreateTrainingWithRollsRequest;
 import com.bjj_metrics_brasil.training.model.response.AllUserTrainingsResponse;
 import com.bjj_metrics_brasil.training.service.TrainingService;
 import jakarta.validation.Valid;
@@ -36,10 +37,21 @@ public class TrainingController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createTraining(
+    public UUID createTraining(
         @AthleteId UUID athleteId,
         @RequestBody @Valid CreateTrainingRequest createTrainingRequest
     ) {
-        trainingService.createTraining(athleteId, createTrainingRequest);
+        return trainingService.createTraining(athleteId, createTrainingRequest);
+    }
+
+    @PostMapping("/create/with-rolls")
+    public void createTrainingWithRolls(
+        @AthleteId UUID athleteId,
+        @RequestBody @Valid CreateTrainingWithRollsRequest createTrainingWithRollsRequest
+    ) {
+        trainingService.createTrainingWithRolls(
+            athleteId,
+            createTrainingWithRollsRequest
+        );
     }
 }
