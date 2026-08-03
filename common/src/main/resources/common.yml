@@ -1,0 +1,7 @@
+spring:
+  data:
+    redis:
+      url: ${REDIS_URL}
+
+notification-client:
+  feignUrl: http://localhost:8080

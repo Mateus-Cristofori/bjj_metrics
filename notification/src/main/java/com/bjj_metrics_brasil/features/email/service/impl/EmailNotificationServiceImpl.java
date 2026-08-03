@@ -55,8 +55,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
 
     private String processTemplate(SendNotificationEmailRequest request) {
         Context context = new Context();
-
-        // ! Manipulação de variáveis dos templates html.
+        request.getTemplateData().forEach(context::setVariable);
         return templateEngine.process(request.getTemplate().getValue(), context);
     }
 }

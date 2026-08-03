@@ -5,4 +5,5 @@ public enum JwtTokenClaims {
     ROLES,
     EMAIL,
     ATHLETE_ID,
+    PURPOSE,
 }

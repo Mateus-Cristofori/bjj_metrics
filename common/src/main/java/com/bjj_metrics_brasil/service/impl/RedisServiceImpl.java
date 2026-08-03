@@ -1,11 +1,10 @@
 package com.bjj_metrics_brasil.service.impl;
 
 import com.bjj_metrics_brasil.service.RedisService;
+import java.util.concurrent.TimeUnit;
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 @Component
 @AllArgsConstructor

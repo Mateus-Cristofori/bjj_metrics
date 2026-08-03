@@ -72,7 +72,12 @@ public class SpringSecurityConfig {
                         "/api/v1/statistics",
                         "/api/v1/notification/email/send",
                         "/api/v1/account/retrieve/info",
-                        "/api/v1/training/create/with-rolls"
+                        "/api/v1/training/create/with-rolls",
+                        "/api/v1/otp/generate",
+                        "/api/v1/otp/validate",
+                        "/api/v1/account/send/code/change-password",
+                        "/api/v1/account/password-recovery/verify",
+                        "/api/v1/account/change-password"
                     )
                     .permitAll();
             })
