@@ -12,10 +12,18 @@ public class JwtProperties {
     private String secret;
     private Long expiration;
     private RefreshToken refreshToken;
+    private RecoveryPasswordToken recoveryPasswordToken;
 
     @Getter
     @Setter
     public static class RefreshToken {
+
+        private Long expiration;
+    }
+
+    @Getter
+    @Setter
+    public static class RecoveryPasswordToken {
 
         private Long expiration;
     }

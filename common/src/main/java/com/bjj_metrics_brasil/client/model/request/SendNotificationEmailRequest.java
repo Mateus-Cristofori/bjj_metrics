@@ -1,6 +1,6 @@
-package com.bjj_metrics_brasil.features.email.model.request;
+package com.bjj_metrics_brasil.client.model.request;
 
-import com.bjj_metrics_brasil.features.email.model.Enum.EmailActionEnum;
+import com.bjj_metrics_brasil.client.model.Enum.EmailActionEnum;
 import com.bjj_metrics_brasil.templates.model.Enum.TemplatesEnum;
 import java.util.HashMap;
 import java.util.Map;

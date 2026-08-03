@@ -8,4 +8,6 @@ public interface TokenService {
     String generateRefreshToken(Users user, UUID athleteId);
     UUID getAthleteIdFromToken(String token);
     UUID getUserIdFromToken(String token);
+    String generatePasswordRecoveryToken(String email);
+    String getEmailFromPasswordRecoveryToken(String token);
 }

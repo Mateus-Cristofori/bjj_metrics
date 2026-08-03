@@ -1,7 +1,9 @@
 package com.bjj_metrics_brasil.features.account.controller;
 
 import com.bjj_metrics_brasil.annotation.UserId;
+import com.bjj_metrics_brasil.features.account.model.request.ChangePasswordRequest;
 import com.bjj_metrics_brasil.features.account.model.request.SendCodeChangePasswordRequest;
+import com.bjj_metrics_brasil.features.account.model.request.VerifyTokenPasswordRecoveryRequest;
 import com.bjj_metrics_brasil.features.account.model.response.RetrieveUserAccountInfoResponse;
 import com.bjj_metrics_brasil.features.account.service.AccountService;
 import jakarta.validation.Valid;
@@ -24,10 +26,25 @@ public class AccountController {
     @PostMapping("/send/code/change-password")
     public void sendCodeChangePassword(
         @RequestBody @Valid SendCodeChangePasswordRequest sendCodeChangePasswordRequest
-    ) {}
+    ) {
+        accountService.sendCodeChangePassword(sendCodeChangePasswordRequest);
+    }
 
-    @PatchMapping("/change")
-    public void changePassword() {}
+    @PostMapping("/password-recovery/verify")
+    public String verifyTokenPasswordRecovery(
+        @RequestBody VerifyTokenPasswordRecoveryRequest verifyTokenPasswordRecoveryRequest
+    ) {
+        return accountService.verifyTokenPasswordRecovery(
+            verifyTokenPasswordRecoveryRequest
+        );
+    }
+
+    @PatchMapping("/change-password")
+    public void changePassword(
+        @RequestBody @Valid ChangePasswordRequest changePasswordRequest
+    ) {
+        accountService.changePassword(changePasswordRequest);
+    }
 
     @GetMapping("/retrieve/info")
     public RetrieveUserAccountInfoResponse retrieveUserAccountInfo(@UserId UUID userId) {
