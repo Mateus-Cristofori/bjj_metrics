@@ -1,4 +1,4 @@
-package com.bjj_metrics_brasil.features.auth.model.response;
+package com.bjj_metrics_brasil.features.auth.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
+public class RefreshTokenRequest {
 
-    private String accessToken;
     private String refreshToken;
 }
