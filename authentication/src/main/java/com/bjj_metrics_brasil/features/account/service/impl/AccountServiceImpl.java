@@ -43,6 +43,8 @@ public class AccountServiceImpl implements AccountService {
             throw new BadRequestException("Invalid email format");
         }
 
+        usersRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+
         otpService.generateOtp(GenerateOtpRequest.builder().email(email).build());
     }
 
