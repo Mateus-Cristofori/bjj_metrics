@@ -1,7 +1,9 @@
 package com.bjj_metrics_brasil.features.auth.controller;
 
 import com.bjj_metrics_brasil.features.auth.model.request.AuthenticationRequest;
+import com.bjj_metrics_brasil.features.auth.model.request.RefreshTokenRequest;
 import com.bjj_metrics_brasil.features.auth.model.response.AuthenticationResponse;
+import com.bjj_metrics_brasil.features.auth.model.response.RefreshTokenResponse;
 import com.bjj_metrics_brasil.features.auth.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -22,5 +24,12 @@ public class AuthenticationController {
         @RequestBody @Valid AuthenticationRequest authenticationRequest
     ) {
         return authenticationService.login(authenticationRequest);
+    }
+
+    @PostMapping("/refresh")
+    public RefreshTokenResponse refresh(
+        @RequestBody RefreshTokenRequest refreshTokenRequest
+    ) {
+        return authenticationService.refresh(refreshTokenRequest);
     }
 }

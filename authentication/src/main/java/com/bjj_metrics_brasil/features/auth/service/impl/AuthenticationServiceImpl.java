@@ -1,14 +1,20 @@
 package com.bjj_metrics_brasil.features.auth.service.impl;
 
 import com.bjj_metrics_brasil.client.AppClient;
+import com.bjj_metrics_brasil.exceptions.BadRequestException;
 import com.bjj_metrics_brasil.exceptions.InvalidUserCredentialsException;
 import com.bjj_metrics_brasil.exceptions.UserNotFoundException;
 import com.bjj_metrics_brasil.features.auth.model.request.AuthenticationRequest;
+import com.bjj_metrics_brasil.features.auth.model.request.RefreshTokenRequest;
 import com.bjj_metrics_brasil.features.auth.model.response.AuthenticationResponse;
+import com.bjj_metrics_brasil.features.auth.model.response.RefreshTokenResponse;
 import com.bjj_metrics_brasil.features.auth.repository.UsersRepository;
 import com.bjj_metrics_brasil.features.auth.repository.entity.Users;
 import com.bjj_metrics_brasil.features.auth.service.AuthenticationService;
+import com.bjj_metrics_brasil.features.config.token.config.JwtTokenClaims;
+import com.bjj_metrics_brasil.features.config.token.purpose.JwtTokenPurposeEnum;
 import com.bjj_metrics_brasil.features.config.token.service.TokenService;
+import io.jsonwebtoken.Claims;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,14 +42,42 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         UUID athleteId = appClient.retrieveAthleteByUserId(user.getId()).getId();
 
-        String token = tokenService.generateToken(user, athleteId);
+        String accessToken = tokenService.generateToken(user, athleteId);
         String refreshToken = tokenService.generateRefreshToken(user, athleteId);
 
         return AuthenticationResponse
             .builder()
-            .token(token)
+            .accessToken(accessToken)
             .refreshToken(refreshToken)
             .build();
+    }
+
+    @Override
+    public RefreshTokenResponse refresh(RefreshTokenRequest refreshTokenRequest) {
+        String refreshToken = refreshTokenRequest.getRefreshToken();
+        Claims claims = tokenService.parseToken(refreshToken);
+
+        String purpose = claims.get(JwtTokenClaims.PURPOSE.name(), String.class);
+
+        if (!JwtTokenPurposeEnum.REFRESH.name().equals(purpose)) {
+            throw new BadRequestException("Refresh token inválido.");
+        }
+
+        UUID userId = UUID.fromString(
+            claims.get(JwtTokenClaims.USER_ID.name(), String.class)
+        );
+
+        UUID athleteId = UUID.fromString(
+            claims.get(JwtTokenClaims.ATHLETE_ID.name(), String.class)
+        );
+
+        Users user = usersRepository
+            .findById(userId)
+            .orElseThrow(UserNotFoundException::new);
+
+        String accessToken = tokenService.generateToken(user, athleteId);
+
+        return new RefreshTokenResponse(accessToken);
     }
 
     private void authenticateUser(

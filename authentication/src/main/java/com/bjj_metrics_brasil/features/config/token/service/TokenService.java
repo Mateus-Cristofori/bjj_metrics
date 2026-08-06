@@ -1,6 +1,7 @@
 package com.bjj_metrics_brasil.features.config.token.service;
 
 import com.bjj_metrics_brasil.features.auth.repository.entity.Users;
+import io.jsonwebtoken.Claims;
 import java.util.UUID;
 
 public interface TokenService {
@@ -10,4 +11,5 @@ public interface TokenService {
     UUID getUserIdFromToken(String token);
     String generatePasswordRecoveryToken(String email);
     String getEmailFromPasswordRecoveryToken(String token);
+    Claims parseToken(String token);
 }

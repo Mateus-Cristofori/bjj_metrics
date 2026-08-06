@@ -110,6 +110,18 @@ public class TokenServiceImpl implements TokenService {
         return claims.get(JwtTokenClaims.EMAIL.name(), String.class);
     }
 
+    @Override
+    public Claims parseToken(String token) {
+        return Jwts
+            .parser()
+            .setSigningKey(
+                Keys.hmacShaKeyFor(getSecret().getBytes(StandardCharsets.UTF_8))
+            )
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+    }
+
     private String generateJwt(Map<String, Object> claims, Long expiration) {
         Date now = new Date(System.currentTimeMillis());
         Date expiresIn = new Date(now.getTime() + expiration);
@@ -124,16 +136,5 @@ public class TokenServiceImpl implements TokenService {
 
     private String getSecret() {
         return jwtProperties.getSecret();
-    }
-
-    private Claims parseToken(String token) {
-        return Jwts
-            .parser()
-            .setSigningKey(
-                Keys.hmacShaKeyFor(getSecret().getBytes(StandardCharsets.UTF_8))
-            )
-            .build()
-            .parseClaimsJws(token)
-            .getBody();
     }
 }

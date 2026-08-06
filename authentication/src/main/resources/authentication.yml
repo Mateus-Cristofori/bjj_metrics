@@ -3,9 +3,9 @@ spring:
     name: bjj-metrics
     jwt:
       secret: ${JWT_SECRET}
-      expiration: ${JWT_EXPIRATION:3600000}
+      expiration: ${JWT_EXPIRATION:900000}
       refresh-token:
-        expiration: ${JWT_REFRESH_TOKEN:7200000}
+        expiration: ${JWT_REFRESH_TOKEN:2592000000}
       recovery-password-token:
         expiration: ${JWT_RECOVERY_TOKEN:600000}
 
