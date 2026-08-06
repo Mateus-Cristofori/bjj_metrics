@@ -2,6 +2,7 @@ package com.bjj_metrics_brasil.training.model.response;
 
 import java.time.LocalDate;
 import java.util.UUID;
+import com.bjj_metrics_brasil.training.model.Enum.AthleteTrainingPerformanceEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +22,5 @@ public class AllUserTrainingsResponse {
     private UUID academyId;
     private String notes;
     private LocalDate trainingDate;
+    private AthleteTrainingPerformanceEnum athleteTrainingPerformance;
 }

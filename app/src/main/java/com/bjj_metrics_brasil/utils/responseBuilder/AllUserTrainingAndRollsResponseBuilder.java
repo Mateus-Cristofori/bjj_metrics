@@ -21,6 +21,7 @@ public class AllUserTrainingAndRollsResponseBuilder {
                 .academyId(training.getAcademyId())
                 .notes(training.getNotes())
                 .trainingDate(training.getTrainingDate())
+                .athleteTrainingPerformance(training.getAthletePerformance())
                 .rolls(buildRollsTraining(rolls))
                 .build();
 
@@ -38,6 +39,7 @@ public class AllUserTrainingAndRollsResponseBuilder {
             .map(roll ->
                 AllUserTrainingsAndRollsResponse.RollsByTraining
                     .builder()
+                    .rollId(roll.getId())
                     .intensity(roll.getIntensity().name())
                     .durationMinutes(roll.getDurationMinutes())
                     .partnerName(roll.getPartnerName())

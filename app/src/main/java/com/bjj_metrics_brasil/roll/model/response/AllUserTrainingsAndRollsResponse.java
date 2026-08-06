@@ -5,6 +5,7 @@ import com.bjj_metrics_brasil.roll.model.Enum.StartPositionEnum;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import com.bjj_metrics_brasil.training.model.Enum.AthleteTrainingPerformanceEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class AllUserTrainingsAndRollsResponse {
         private UUID academyId;
         private String notes;
         private LocalDate trainingDate;
+        private AthleteTrainingPerformanceEnum athleteTrainingPerformance;
         private List<RollsByTraining> rolls;
     }
 
@@ -37,6 +39,7 @@ public class AllUserTrainingsAndRollsResponse {
     @Builder
     public static class RollsByTraining {
 
+        private UUID rollId;
         private String intensity;
         private Integer durationMinutes;
         private String partnerName;
